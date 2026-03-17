@@ -1,7 +1,9 @@
 "use client";
 
-import { useCallback } from "react";
-import { Loader2, FileText, GitCompare, ClipboardList, Star } from "lucide-react";
+import { useCallback, useState } from "react";
+import { Loader2, FileText, GitCompare, ClipboardList, Star, Plus } from "lucide-react";
+import { ScoreGapModal } from "@/components/forms/ScoreGapModal";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -402,12 +404,19 @@ function ComparisonsTab() {
 // ── Page ─────────────────────────────────────────────────────────────
 
 export default function ContentPage() {
+  const [scoreModalOpen, setScoreModalOpen] = useState(false);
+
   return (
     <div className="space-y-6">
       <PageHeader
         title="Content Hub"
         description="Gap scoring, briefs, and content templates"
-      />
+      >
+        <Button onClick={() => setScoreModalOpen(true)} className="bg-primary-600 text-white hover:bg-primary-700">
+          <Plus className="h-4 w-4 mr-2" />
+          Score New Gap
+        </Button>
+      </PageHeader>
 
       <Tabs defaultValue="gap-scores" className="space-y-4">
         <TabsList>
@@ -433,6 +442,8 @@ export default function ContentPage() {
           <ComparisonsTab />
         </TabsContent>
       </Tabs>
+
+      <ScoreGapModal open={scoreModalOpen} onOpenChange={setScoreModalOpen} />
     </div>
   );
 }

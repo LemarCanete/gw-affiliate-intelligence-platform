@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo } from "react";
 import Link from "next/link";
-import { Search, ArrowUpDown, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { Search, ArrowUpDown, ChevronLeft, ChevronRight, Loader2, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { PageHeader, ScoreBadge, StatusBadge } from "@/components/dashboard";
+import { AddProductModal } from "@/components/forms/AddProductModal";
 import { useAsyncData } from "@/lib/hooks/useAsyncData";
 import { getProducts } from "@/lib/mock-data/products";
 import type { Product, FeedType, PublishStatus, GapStatus } from "@/lib/types/domain";
@@ -146,6 +147,9 @@ export default function ProductsPage() {
   const fetcher = useCallback(() => getProducts(), []);
   const { data: products, loading } = useAsyncData(fetcher);
 
+  // Add Product modal
+  const [addModalOpen, setAddModalOpen] = useState(false);
+
   // Filters
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -212,7 +216,12 @@ export default function ProductsPage() {
       <PageHeader
         title="Products"
         description="Discover and manage affiliate products across all intelligence feeds."
-      />
+      >
+        <Button onClick={() => setAddModalOpen(true)} className="bg-primary-600 text-white hover:bg-primary-700">
+          <Plus className="h-4 w-4 mr-2" />
+          Add Product
+        </Button>
+      </PageHeader>
 
       {/* ── Filter bar ──────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row gap-3">
@@ -417,6 +426,7 @@ export default function ProductsPage() {
           )}
         </>
       )}
+      <AddProductModal open={addModalOpen} onOpenChange={setAddModalOpen} />
     </div>
   );
 }

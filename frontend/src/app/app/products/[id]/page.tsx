@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -13,7 +13,13 @@ import {
   Mail,
   Share2,
   Calendar,
+  FlaskConical,
+  Sparkles,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { RunLlmTestModal } from "@/components/forms/RunLlmTestModal";
+import { CreateBriefModal } from "@/components/forms/CreateBriefModal";
+import { GenerateContentModal } from "@/components/forms/GenerateContentModal";
 import {
   Card,
   CardContent,
@@ -158,6 +164,9 @@ export default function ProductDetailPage() {
   const id = params.id as string;
   const fetcher = useCallback(() => getProductById(id), [id]);
   const { data: product, loading } = useAsyncData(fetcher);
+  const [llmTestOpen, setLlmTestOpen] = useState(false);
+  const [briefOpen, setBriefOpen] = useState(false);
+  const [generateOpen, setGenerateOpen] = useState(false);
 
   if (loading) {
     return (
@@ -216,6 +225,20 @@ export default function ProductDetailPage() {
           <div className="mt-2 flex items-center gap-1 text-xs text-gray-400">
             <Calendar className="h-3 w-3" />
             Launched {new Date(product.launchedAt).toLocaleDateString()} ({daysSince(product.launchedAt)}d ago)
+          </div>
+          <div className="flex gap-2 mt-3">
+            <Button variant="outline" size="sm" onClick={() => setLlmTestOpen(true)}>
+              <FlaskConical className="h-4 w-4 mr-1" />
+              Run LLM Test
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => setBriefOpen(true)}>
+              <FileText className="h-4 w-4 mr-1" />
+              Create Brief
+            </Button>
+            <Button size="sm" className="bg-primary-600 text-white hover:bg-primary-700" onClick={() => setGenerateOpen(true)}>
+              <Sparkles className="h-4 w-4 mr-1" />
+              Generate Content
+            </Button>
           </div>
         </div>
       </div>
@@ -466,6 +489,10 @@ export default function ProductDetailPage() {
           </ChartCard>
         </TabsContent>
       </Tabs>
+
+      <RunLlmTestModal open={llmTestOpen} onOpenChange={setLlmTestOpen} productName={product.name} />
+      <CreateBriefModal open={briefOpen} onOpenChange={setBriefOpen} productName={product.name} />
+      <GenerateContentModal open={generateOpen} onOpenChange={setGenerateOpen} productName={product.name} />
     </div>
   );
 }
