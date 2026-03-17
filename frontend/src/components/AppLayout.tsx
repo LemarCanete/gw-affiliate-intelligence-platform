@@ -12,6 +12,7 @@ import {
     GitBranch,
     Workflow,
     CreditCard,
+    Shield,
     Settings,
     Menu,
     X,
@@ -67,6 +68,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         { name: 'Pipeline', href: '/app/pipeline', icon: Workflow },
         { name: 'Refresh', href: '/app/refresh', icon: RefreshCw },
         { name: 'Billing', href: '/app/billing', icon: CreditCard },
+        { name: 'Admin', href: '/app/admin', icon: Shield },
         { name: 'Settings', href: '/app/user-settings', icon: Settings },
     ];
 
