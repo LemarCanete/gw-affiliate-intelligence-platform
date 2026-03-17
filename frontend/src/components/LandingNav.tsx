@@ -146,7 +146,7 @@ export default function LandingNav() {
             <Link href="#pricing" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
               Pricing
             </Link>
-            <div className="pl-2 border-l border-gray-200">
+            <div className="flex items-center gap-4 pl-4 ml-2 border-l border-gray-200">
               <AuthAwareButtons variant="nav" />
             </div>
           </div>
@@ -207,7 +207,7 @@ export default function LandingNav() {
             >
               Pricing
             </Link>
-            <div className="pt-3 border-t border-gray-100">
+            <div className="flex items-center gap-4 pt-3 border-t border-gray-100">
               <AuthAwareButtons variant="nav" />
             </div>
           </div>
