@@ -8,3 +8,4 @@ export { PageHeader } from "./PageHeader";
 export { ChartCard } from "./ChartCard";
 export { EmptyState } from "./EmptyState";
 export { FeedCard } from "./FeedCard";
+export { PipelineTimeline } from "./PipelineTimeline";

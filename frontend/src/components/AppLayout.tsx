@@ -9,6 +9,8 @@ import {
     PenTool,
     BarChart3,
     FileText,
+    GitBranch,
+    Workflow,
     CreditCard,
     Settings,
     Menu,
@@ -18,6 +20,7 @@ import {
     ChevronRight,
     LogOut,
     Key,
+    RefreshCw,
 } from 'lucide-react';
 import { useGlobal } from "@/lib/context/GlobalContext";
 import { createSPASassClient } from "@/lib/supabase/client";
@@ -60,6 +63,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         { name: 'Content', href: '/app/content', icon: PenTool },
         { name: 'Analytics', href: '/app/analytics', icon: BarChart3 },
         { name: 'Reports', href: '/app/reports', icon: FileText },
+        { name: 'Workflows', href: '/app/workflows', icon: GitBranch },
+        { name: 'Pipeline', href: '/app/pipeline', icon: Workflow },
+        { name: 'Refresh', href: '/app/refresh', icon: RefreshCw },
         { name: 'Billing', href: '/app/billing', icon: CreditCard },
         { name: 'Settings', href: '/app/user-settings', icon: Settings },
     ];
