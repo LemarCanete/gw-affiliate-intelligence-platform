@@ -14,6 +14,8 @@ import {
     Menu,
     X,
     ChevronDown,
+    ChevronLeft,
+    ChevronRight,
     LogOut,
     Key,
 } from 'lucide-react';
@@ -22,10 +24,10 @@ import { createSPASassClient } from "@/lib/supabase/client";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(false);
     const [isUserDropdownOpen, setUserDropdownOpen] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
-
 
     const { user } = useGlobal();
 
@@ -62,9 +64,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     ];
 
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+    const sidebarWidth = isCollapsed ? 'w-[68px]' : 'w-64';
+    const mainPadding = isCollapsed ? 'lg:pl-[68px]' : 'lg:pl-64';
 
     return (
         <div className="min-h-screen bg-gray-100">
+            {/* Mobile overlay */}
             {isSidebarOpen && (
                 <div
                     className="fixed inset-0 bg-gray-600 bg-opacity-75 z-20 lg:hidden"
@@ -73,15 +78,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             )}
 
             {/* Sidebar */}
-            <div className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out z-30 
+            <div className={`fixed inset-y-0 left-0 ${sidebarWidth} bg-white shadow-lg transform transition-all duration-200 ease-in-out z-30
                 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
 
-                <div className="h-16 flex items-center justify-between px-4 border-b">
-                    <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+                {/* Header */}
+                <div className="h-16 flex items-center justify-between px-3 border-b">
+                    <div className={`flex items-center gap-2 overflow-hidden ${isCollapsed ? 'justify-center w-full' : ''}`}>
+                        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shrink-0">
                             <Radar className="w-3.5 h-3.5 text-white" />
                         </div>
-                        <span className="text-lg font-bold text-gray-900 tracking-tight">{productName}</span>
+                        {!isCollapsed && (
+                            <span className="text-lg font-bold text-gray-900 tracking-tight whitespace-nowrap">
+                                {productName}
+                            </span>
+                        )}
                     </div>
                     <button
                         onClick={toggleSidebar}
@@ -92,7 +102,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 </div>
 
                 {/* Navigation */}
-                <nav className="mt-4 px-2 space-y-1">
+                <nav className="mt-4 px-2 space-y-1 flex-1">
                     {navigation.map((item) => {
                         const isActive = item.href === '/app'
                             ? pathname === '/app'
@@ -101,26 +111,45 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                                title={isCollapsed ? item.name : undefined}
+                                className={`group flex items-center ${isCollapsed ? 'justify-center px-2' : 'px-2'} py-2 text-sm font-medium rounded-md transition-colors ${
                                     isActive
                                         ? 'bg-primary-50 text-primary-600'
                                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                                 }`}
                             >
                                 <item.icon
-                                    className={`mr-3 h-5 w-5 ${
+                                    className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 shrink-0 ${
                                         isActive ? 'text-primary-500' : 'text-gray-400 group-hover:text-gray-500'
                                     }`}
                                 />
-                                {item.name}
+                                {!isCollapsed && item.name}
                             </Link>
                         );
                     })}
                 </nav>
 
+                {/* Collapse toggle — desktop only */}
+                <div className="hidden lg:flex absolute bottom-4 left-0 right-0 px-2">
+                    <button
+                        onClick={() => setIsCollapsed(!isCollapsed)}
+                        className={`flex items-center ${isCollapsed ? 'justify-center w-full' : 'w-full'} px-2 py-2 text-sm font-medium text-gray-500 rounded-md hover:bg-gray-50 hover:text-gray-700 transition-colors`}
+                    >
+                        {isCollapsed ? (
+                            <ChevronRight className="h-5 w-5" />
+                        ) : (
+                            <>
+                                <ChevronLeft className="h-5 w-5 mr-3" />
+                                Collapse
+                            </>
+                        )}
+                    </button>
+                </div>
             </div>
 
-            <div className="lg:pl-64">
+            {/* Main content */}
+            <div className={`${mainPadding} transition-all duration-200`}>
+                {/* Top bar */}
                 <div className="sticky top-0 z-10 flex items-center justify-between h-16 bg-white shadow-sm px-4">
                     <button
                         onClick={toggleSidebar}
