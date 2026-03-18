@@ -4,16 +4,16 @@ import Link from 'next/link';
 import {usePathname, useRouter} from 'next/navigation';
 import {
     LayoutDashboard,
-    Package,
+    Search,
     Radar,
     PenTool,
+    ClipboardCheck,
+    Send,
+    Eye,
     BarChart3,
-    FileText,
-    GitBranch,
-    Workflow,
     CreditCard,
-    Shield,
     Settings,
+    Plug,
     Menu,
     X,
     ChevronDown,
@@ -21,7 +21,6 @@ import {
     ChevronRight,
     LogOut,
     Key,
-    RefreshCw,
 } from 'lucide-react';
 import { useGlobal } from "@/lib/context/GlobalContext";
 import { createSPASassClient } from "@/lib/supabase/client";
@@ -58,18 +57,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     const productName = process.env.NEXT_PUBLIC_PRODUCTNAME;
 
     const navigation = [
-        { name: 'Overview', href: '/app', icon: LayoutDashboard },
-        { name: 'Products', href: '/app/products', icon: Package },
-        { name: 'Intelligence Feeds', href: '/app/feeds', icon: Radar },
+        { name: 'Dashboard', href: '/app', icon: LayoutDashboard },
+        { name: 'Opportunities', href: '/app/products', icon: Search },
+        { name: 'Gap Validation', href: '/app/feeds', icon: Radar },
         { name: 'Content', href: '/app/content', icon: PenTool },
+        { name: 'Staging', href: '/app/staging', icon: ClipboardCheck },
+        { name: 'Publishing', href: '/app/pipeline', icon: Send },
+        { name: 'Monitoring', href: '/app/refresh', icon: Eye },
         { name: 'Analytics', href: '/app/analytics', icon: BarChart3 },
-        { name: 'Reports', href: '/app/reports', icon: FileText },
-        { name: 'Workflows', href: '/app/workflows', icon: GitBranch },
-        { name: 'Pipeline', href: '/app/pipeline', icon: Workflow },
-        { name: 'Refresh', href: '/app/refresh', icon: RefreshCw },
         { name: 'Billing', href: '/app/billing', icon: CreditCard },
-        { name: 'Admin', href: '/app/admin', icon: Shield },
         { name: 'Settings', href: '/app/user-settings', icon: Settings },
+        { name: 'Connections', href: '/app/connect', icon: Plug },
     ];
 
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);

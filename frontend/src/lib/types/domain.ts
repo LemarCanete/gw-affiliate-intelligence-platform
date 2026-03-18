@@ -37,6 +37,8 @@ export type FeedHealth = 'healthy' | 'warning' | 'error';
 
 export type GapStatus = 'double-gap' | 'google-only' | 'llm-only' | 'closing' | 'saturated';
 
+export type GapVerdict = 'auto-queue' | 'human-review' | 'discard';
+
 export type ContentIntent = 'informational' | 'comparison' | 'review' | 'how-to';
 
 export interface LlmTestResult {
@@ -64,12 +66,12 @@ export interface ContentBrief {
 // ── Domain Models ────────────────────────────────────────────────────
 
 export interface ProductScore {
-  productNewness: number;    // 1-5 (5 = launched < 30 days, 4 = < 60 days, 3 = < 90 days, 2 = < 180 days, 1 = older)
-  llmGapStrength: number;    // 1-5 (5 = "no info", 4 = vague, 3 = generic, 2 = partial, 1 = confident)
-  buyingIntent: number;      // 1-5 (5 = comparison/review query, 4 = how-to, 3 = informational, 2 = navigational, 1 = branded)
-  affiliateAvailable: number; // 1-5 (5 = 30%+ recurring, 4 = 20-30%, 3 = 10-20%, 2 = < 10%, 1 = none confirmed)
-  googleGapStrength: number;  // 1-5 (5 = no real content, 4 = only forums, 3 = thin DA90+, 2 = some competition, 1 = saturated)
-  total: number;             // sum, threshold 18/25
+  productNewness: 0 | 1;      // 1 = launched < 90 days
+  llmGapStrength: 0 | 1;      // 1 = LLM gives weak/no answer
+  buyingIntent: 0 | 1;        // 1 = query has buying intent
+  affiliateAvailable: 0 | 1;  // 1 = affiliate program exists
+  googleGapStrength: 0 | 1;   // 1 = Google results are thin
+  total: number;               // sum 0-5
 }
 
 export interface Product {
@@ -83,6 +85,7 @@ export interface Product {
   serpPosition: number | null;
   geoScore: number; // 0-100
   source: FeedType;
+  verdict: GapVerdict;
   gapStatus: GapStatus;
   intent: ContentIntent;
   launchedAt: string;

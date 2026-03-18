@@ -34,8 +34,8 @@ function asset(
 const products: Product[] = [
   {
     id: 'prod-001', name: 'StudyAI Pro', description: 'AI-powered study planner that adapts to learning styles and exam schedules.', category: 'Education - Study Tools',
-    score: { productNewness: 5, llmGapStrength: 4, buyingIntent: 5, affiliateAvailable: 5, googleGapStrength: 4, total: 23 },
-    status: 'published', revenue: 2480, serpPosition: 5, geoScore: 88, source: 'serp-gap', gapStatus: 'double-gap', intent: 'review', launchedAt: '2026-02-20',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 1, total: 5 },
+    status: 'published', revenue: 2480, serpPosition: 5, geoScore: 88, source: 'serp-gap', verdict: 'auto-queue', gapStatus: 'double-gap', intent: 'review', launchedAt: '2026-02-20',
     llmTestResults: [
       { engine: 'chatgpt', query: 'StudyAI Pro review', responseType: 'vague', citedSources: [], testedAt: '2026-03-10T10:00:00Z' },
       { engine: 'perplexity', query: 'best AI study planner 2026', responseType: 'no-info', citedSources: [], testedAt: '2026-03-10T10:05:00Z' },
@@ -56,8 +56,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-002', name: 'NoteGenius', description: 'Transforms lecture recordings into structured notes with AI summarisation.', category: 'Education - Note Taking',
-    score: { productNewness: 4, llmGapStrength: 4, buyingIntent: 5, affiliateAvailable: 5, googleGapStrength: 4, total: 22 },
-    status: 'published', revenue: 1920, serpPosition: 8, geoScore: 82, source: 'gsc-miner', gapStatus: 'double-gap', intent: 'comparison', launchedAt: '2026-01-15',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 4 },
+    status: 'published', revenue: 1920, serpPosition: 8, geoScore: 82, source: 'gsc-miner', verdict: 'auto-queue', gapStatus: 'double-gap', intent: 'comparison', launchedAt: '2026-01-15',
     llmTestResults: [
       { engine: 'chatgpt', query: 'NoteGenius AI review', responseType: 'vague', citedSources: [], testedAt: '2026-03-08T09:00:00Z' },
       { engine: 'perplexity', query: 'NoteGenius vs Notion AI for students', responseType: 'no-info', citedSources: [], testedAt: '2026-03-08T09:10:00Z' },
@@ -76,8 +76,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-003', name: 'QuizMaster AI', description: 'Generates adaptive practice quizzes from any study material using spaced repetition.', category: 'Education - Assessment',
-    score: { productNewness: 4, llmGapStrength: 3, buyingIntent: 4, affiliateAvailable: 4, googleGapStrength: 5, total: 20 },
-    status: 'published', revenue: 1650, serpPosition: 3, geoScore: 91, source: 'kgr-weakspot', gapStatus: 'google-only', intent: 'how-to', launchedAt: '2026-01-05',
+    score: { productNewness: 1, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 1, total: 4 },
+    status: 'published', revenue: 1650, serpPosition: 3, geoScore: 91, source: 'kgr-weakspot', verdict: 'auto-queue', gapStatus: 'google-only', intent: 'how-to', launchedAt: '2026-01-05',
     llmTestResults: [
       { engine: 'chatgpt', query: 'how to create AI quizzes from study notes', responseType: 'generic', citedSources: ['quizlet.com'], testedAt: '2026-03-05T11:00:00Z' },
       { engine: 'gemini', query: 'QuizMaster AI review', responseType: 'generic', citedSources: [], testedAt: '2026-03-05T11:15:00Z' },
@@ -98,8 +98,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-004', name: 'GradeBot', description: 'AI teaching assistant that auto-grades assignments and provides personalised feedback.', category: 'Education - Grading',
-    score: { productNewness: 3, llmGapStrength: 4, buyingIntent: 4, affiliateAvailable: 5, googleGapStrength: 3, total: 19 },
-    status: 'published', revenue: 1180, serpPosition: 12, geoScore: 74, source: 'ai-proxy', gapStatus: 'llm-only', intent: 'review', launchedAt: '2025-12-15',
+    score: { productNewness: 0, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 3 },
+    status: 'published', revenue: 1180, serpPosition: 12, geoScore: 74, source: 'ai-proxy', verdict: 'human-review', gapStatus: 'llm-only', intent: 'review', launchedAt: '2025-12-15',
     llmTestResults: [
       { engine: 'chatgpt', query: 'GradeBot AI grading tool', responseType: 'vague', citedSources: [], testedAt: '2026-03-07T10:00:00Z' },
       { engine: 'perplexity', query: 'best AI grading software for teachers', responseType: 'vague', citedSources: [], testedAt: '2026-03-07T10:10:00Z' },
@@ -117,8 +117,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-005', name: 'LessonForge', description: 'AI lesson plan generator aligned with curriculum standards for K-12 teachers.', category: 'Education - Lesson Planning',
-    score: { productNewness: 4, llmGapStrength: 4, buyingIntent: 4, affiliateAvailable: 4, googleGapStrength: 4, total: 20 },
-    status: 'published', revenue: 980, serpPosition: 15, geoScore: 68, source: 'pseo-engine', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2026-01-10',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 1, total: 5 },
+    status: 'published', revenue: 980, serpPosition: 15, geoScore: 68, source: 'pseo-engine', verdict: 'auto-queue', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2026-01-10',
     llmTestResults: [
       { engine: 'chatgpt', query: 'LessonForge AI lesson plan generator', responseType: 'no-info', citedSources: [], testedAt: '2026-03-04T15:00:00Z' },
       { engine: 'gemini', query: 'best AI lesson plan tool for teachers', responseType: 'vague', citedSources: [], testedAt: '2026-03-04T15:10:00Z' },
@@ -136,8 +136,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-006', name: 'EduFlow', description: 'All-in-one LMS with AI-powered course creation and student analytics.', category: 'Education - LMS',
-    score: { productNewness: 2, llmGapStrength: 3, buyingIntent: 5, affiliateAvailable: 4, googleGapStrength: 3, total: 17 },
-    status: 'published', revenue: 2150, serpPosition: 18, geoScore: 65, source: 'yt-blog-overlap', gapStatus: 'closing', intent: 'comparison', launchedAt: '2025-09-20',
+    score: { productNewness: 0, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 2 },
+    status: 'published', revenue: 2150, serpPosition: 18, geoScore: 65, source: 'yt-blog-overlap', verdict: 'discard', gapStatus: 'closing', intent: 'comparison', launchedAt: '2025-09-20',
     llmTestResults: [
       { engine: 'chatgpt', query: 'EduFlow LMS review', responseType: 'generic', citedSources: ['g2.com'], testedAt: '2026-03-06T12:00:00Z' },
       { engine: 'perplexity', query: 'EduFlow vs Teachable vs Thinkific', responseType: 'generic', citedSources: ['techcrunch.com'], testedAt: '2026-03-06T12:10:00Z' },
@@ -156,8 +156,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-007', name: 'BrainSpark', description: 'AI flashcard generator with visual mnemonics and collaborative study rooms.', category: 'Education - Flashcards',
-    score: { productNewness: 5, llmGapStrength: 5, buyingIntent: 4, affiliateAvailable: 5, googleGapStrength: 5, total: 24 },
-    status: 'published', revenue: 1340, serpPosition: 7, geoScore: 85, source: 'youtube-comments', gapStatus: 'double-gap', intent: 'comparison', launchedAt: '2026-02-25',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 1, total: 5 },
+    status: 'published', revenue: 1340, serpPosition: 7, geoScore: 85, source: 'youtube-comments', verdict: 'auto-queue', gapStatus: 'double-gap', intent: 'comparison', launchedAt: '2026-02-25',
     llmTestResults: [
       { engine: 'chatgpt', query: 'BrainSpark AI flashcards review', responseType: 'no-info', citedSources: [], testedAt: '2026-03-12T10:00:00Z' },
       { engine: 'perplexity', query: 'BrainSpark vs Anki', responseType: 'no-info', citedSources: [], testedAt: '2026-03-12T10:05:00Z' },
@@ -178,8 +178,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-008', name: 'ClassPilot', description: 'AI classroom management tool with behaviour tracking and parent communication.', category: 'Education - Classroom Management',
-    score: { productNewness: 5, llmGapStrength: 5, buyingIntent: 3, affiliateAvailable: 4, googleGapStrength: 5, total: 22 },
-    status: 'published', revenue: 720, serpPosition: 22, geoScore: 58, source: 'reddit-miner', gapStatus: 'double-gap', intent: 'informational', launchedAt: '2026-03-01',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 4 },
+    status: 'published', revenue: 720, serpPosition: 22, geoScore: 58, source: 'reddit-miner', verdict: 'auto-queue', gapStatus: 'double-gap', intent: 'informational', launchedAt: '2026-03-01',
     llmTestResults: [
       { engine: 'chatgpt', query: 'ClassPilot classroom management AI', responseType: 'no-info', citedSources: [], testedAt: '2026-03-14T09:00:00Z' },
       { engine: 'gemini', query: 'AI classroom behaviour tracking', responseType: 'no-info', citedSources: [], testedAt: '2026-03-14T09:10:00Z' },
@@ -196,8 +196,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-009', name: 'TutorLens', description: 'AI-driven tutoring marketplace matching students with specialised AI + human tutors.', category: 'Education - Tutoring',
-    score: { productNewness: 3, llmGapStrength: 3, buyingIntent: 5, affiliateAvailable: 5, googleGapStrength: 3, total: 19 },
-    status: 'published', revenue: 1560, serpPosition: 10, geoScore: 78, source: 'serp-gap', gapStatus: 'closing', intent: 'comparison', launchedAt: '2025-12-01',
+    score: { productNewness: 0, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 3 },
+    status: 'published', revenue: 1560, serpPosition: 10, geoScore: 78, source: 'serp-gap', verdict: 'human-review', gapStatus: 'closing', intent: 'comparison', launchedAt: '2025-12-01',
     llmTestResults: [
       { engine: 'chatgpt', query: 'TutorLens AI tutoring review', responseType: 'generic', citedSources: [], testedAt: '2026-03-05T14:00:00Z' },
       { engine: 'perplexity', query: 'AI tutoring vs human tutoring', responseType: 'detailed', citedSources: ['khanacademy.org', 'wyzant.com'], testedAt: '2026-03-05T14:10:00Z' },
@@ -216,8 +216,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-010', name: 'SkillPath AI', description: 'Personalised learning roadmap generator for upskilling in tech and business.', category: 'Productivity - Learning',
-    score: { productNewness: 4, llmGapStrength: 4, buyingIntent: 4, affiliateAvailable: 4, googleGapStrength: 5, total: 21 },
-    status: 'published', revenue: 1890, serpPosition: 6, geoScore: 92, source: 'gsc-miner', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2026-01-20',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 0, googleGapStrength: 1, total: 4 },
+    status: 'published', revenue: 1890, serpPosition: 6, geoScore: 92, source: 'gsc-miner', verdict: 'auto-queue', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2026-01-20',
     llmTestResults: [
       { engine: 'chatgpt', query: 'SkillPath AI learning roadmap', responseType: 'vague', citedSources: [], testedAt: '2026-03-09T10:00:00Z' },
       { engine: 'perplexity', query: 'best AI learning roadmap generator', responseType: 'vague', citedSources: [], testedAt: '2026-03-09T10:15:00Z' },
@@ -236,8 +236,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-011', name: 'FocusForge', description: 'AI-powered deep work timer with distraction blocking and productivity analytics.', category: 'Productivity - Focus',
-    score: { productNewness: 4, llmGapStrength: 4, buyingIntent: 4, affiliateAvailable: 4, googleGapStrength: 4, total: 20 },
-    status: 'published', revenue: 860, serpPosition: 14, geoScore: 71, source: 'kgr-weakspot', gapStatus: 'double-gap', intent: 'review', launchedAt: '2026-01-25',
+    score: { productNewness: 1, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 3 },
+    status: 'published', revenue: 860, serpPosition: 14, geoScore: 71, source: 'kgr-weakspot', verdict: 'human-review', gapStatus: 'double-gap', intent: 'review', launchedAt: '2026-01-25',
     llmTestResults: [
       { engine: 'chatgpt', query: 'FocusForge AI deep work timer', responseType: 'vague', citedSources: [], testedAt: '2026-03-08T11:00:00Z' },
       { engine: 'perplexity', query: 'best AI focus app 2026', responseType: 'no-info', citedSources: [], testedAt: '2026-03-08T11:10:00Z' },
@@ -256,8 +256,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-012', name: 'DeckCraft AI', description: 'AI presentation builder that turns outlines into polished slide decks.', category: 'Productivity - Presentations',
-    score: { productNewness: 3, llmGapStrength: 2, buyingIntent: 5, affiliateAvailable: 4, googleGapStrength: 2, total: 16 },
-    status: 'published', revenue: 1420, serpPosition: 24, geoScore: 55, source: 'ai-proxy', gapStatus: 'saturated', intent: 'comparison', launchedAt: '2025-11-15',
+    score: { productNewness: 0, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 2 },
+    status: 'published', revenue: 1420, serpPosition: 24, geoScore: 55, source: 'ai-proxy', verdict: 'discard', gapStatus: 'saturated', intent: 'comparison', launchedAt: '2025-11-15',
     llmTestResults: [
       { engine: 'chatgpt', query: 'DeckCraft AI review', responseType: 'detailed', citedSources: ['deckcraft.ai', 'producthunt.com'], testedAt: '2026-03-06T14:00:00Z' },
       { engine: 'perplexity', query: 'DeckCraft vs Gamma vs Beautiful.ai', responseType: 'cites-sources', citedSources: ['gamma.app', 'beautiful.ai', 'deckcraft.ai'], testedAt: '2026-03-06T14:10:00Z' },
@@ -273,8 +273,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-013', name: 'MeetingMind', description: 'AI meeting assistant that records, transcribes, and extracts action items.', category: 'Productivity - Meetings',
-    score: { productNewness: 2, llmGapStrength: 2, buyingIntent: 4, affiliateAvailable: 5, googleGapStrength: 2, total: 15 },
-    status: 'published', revenue: 1080, serpPosition: 35, geoScore: 48, source: 'pseo-engine', gapStatus: 'saturated', intent: 'review', launchedAt: '2025-08-10',
+    score: { productNewness: 0, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 0, googleGapStrength: 0, total: 1 },
+    status: 'published', revenue: 1080, serpPosition: 35, geoScore: 48, source: 'pseo-engine', verdict: 'discard', gapStatus: 'saturated', intent: 'review', launchedAt: '2025-08-10',
     llmTestResults: [
       { engine: 'chatgpt', query: 'MeetingMind AI review', responseType: 'detailed', citedSources: ['meetingmind.ai'], testedAt: '2026-03-04T16:00:00Z' },
       { engine: 'perplexity', query: 'best AI meeting assistant', responseType: 'cites-sources', citedSources: ['otter.ai', 'meetingmind.ai', 'fireflies.ai'], testedAt: '2026-03-04T16:10:00Z' },
@@ -290,8 +290,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-014', name: 'WriteFlow', description: 'AI writing assistant for academic essays with citation management and plagiarism check.', category: 'Education - Writing',
-    score: { productNewness: 4, llmGapStrength: 4, buyingIntent: 4, affiliateAvailable: 4, googleGapStrength: 3, total: 19 },
-    status: 'scheduled', revenue: 340, serpPosition: 42, geoScore: 45, source: 'yt-blog-overlap', gapStatus: 'llm-only', intent: 'review', launchedAt: '2026-01-08',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 4 },
+    status: 'scheduled', revenue: 340, serpPosition: 42, geoScore: 45, source: 'yt-blog-overlap', verdict: 'auto-queue', gapStatus: 'llm-only', intent: 'review', launchedAt: '2026-01-08',
     llmTestResults: [
       { engine: 'chatgpt', query: 'WriteFlow AI academic writing', responseType: 'vague', citedSources: [], testedAt: '2026-03-10T12:00:00Z' },
       { engine: 'perplexity', query: 'best AI essay writer with citations', responseType: 'vague', citedSources: [], testedAt: '2026-03-10T12:10:00Z' },
@@ -311,8 +311,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-015', name: 'TaskNinja', description: 'AI task management with automatic prioritisation and time estimation.', category: 'Productivity - Task Management',
-    score: { productNewness: 3, llmGapStrength: 3, buyingIntent: 3, affiliateAvailable: 4, googleGapStrength: 3, total: 16 },
-    status: 'published', revenue: 580, serpPosition: 28, geoScore: 52, source: 'serp-gap', gapStatus: 'closing', intent: 'informational', launchedAt: '2025-12-10',
+    score: { productNewness: 0, llmGapStrength: 1, buyingIntent: 0, affiliateAvailable: 1, googleGapStrength: 0, total: 2 },
+    status: 'published', revenue: 580, serpPosition: 28, geoScore: 52, source: 'serp-gap', verdict: 'discard', gapStatus: 'closing', intent: 'informational', launchedAt: '2025-12-10',
     llmTestResults: [
       { engine: 'chatgpt', query: 'TaskNinja AI task manager', responseType: 'generic', citedSources: [], testedAt: '2026-03-07T11:00:00Z' },
       { engine: 'copilot', query: 'best AI task prioritisation tool', responseType: 'generic', citedSources: ['todoist.com', 'asana.com'], testedAt: '2026-03-07T11:15:00Z' },
@@ -327,8 +327,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-016', name: 'CurriculumAI', description: 'AI curriculum designer for online course creators with market gap analysis.', category: 'Education - Course Creation',
-    score: { productNewness: 5, llmGapStrength: 5, buyingIntent: 3, affiliateAvailable: 5, googleGapStrength: 5, total: 23 },
-    status: 'publishing', revenue: 420, serpPosition: null, geoScore: 38, source: 'youtube-comments', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2026-03-05',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 1, total: 5 },
+    status: 'publishing', revenue: 420, serpPosition: null, geoScore: 38, source: 'youtube-comments', verdict: 'auto-queue', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2026-03-05',
     llmTestResults: [
       { engine: 'chatgpt', query: 'CurriculumAI course design tool', responseType: 'no-info', citedSources: [], testedAt: '2026-03-14T10:00:00Z' },
       { engine: 'perplexity', query: 'AI curriculum designer for online courses', responseType: 'no-info', citedSources: [], testedAt: '2026-03-14T10:10:00Z' },
@@ -348,8 +348,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-017', name: 'PlannerPro AI', description: 'AI daily planner integrating calendar, tasks, habits, and energy-level tracking.', category: 'Productivity - Planning',
-    score: { productNewness: 3, llmGapStrength: 3, buyingIntent: 4, affiliateAvailable: 4, googleGapStrength: 4, total: 18 },
-    status: 'published', revenue: 920, serpPosition: 11, geoScore: 76, source: 'gsc-miner', gapStatus: 'google-only', intent: 'review', launchedAt: '2025-12-20',
+    score: { productNewness: 0, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 0, googleGapStrength: 1, total: 3 },
+    status: 'published', revenue: 920, serpPosition: 11, geoScore: 76, source: 'gsc-miner', verdict: 'human-review', gapStatus: 'google-only', intent: 'review', launchedAt: '2025-12-20',
     llmTestResults: [
       { engine: 'chatgpt', query: 'PlannerPro AI daily planner', responseType: 'generic', citedSources: [], testedAt: '2026-03-07T13:00:00Z' },
       { engine: 'perplexity', query: 'AI daily planner with energy tracking', responseType: 'generic', citedSources: ['notion.so'], testedAt: '2026-03-07T13:10:00Z' },
@@ -367,8 +367,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-018', name: 'ResearchBot', description: 'AI research assistant that finds, summarises, and organises academic papers.', category: 'Education - Research',
-    score: { productNewness: 3, llmGapStrength: 4, buyingIntent: 4, affiliateAvailable: 5, googleGapStrength: 4, total: 20 },
-    status: 'published', revenue: 460, serpPosition: 38, geoScore: 42, source: 'reddit-miner', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2025-12-28',
+    score: { productNewness: 0, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 3 },
+    status: 'published', revenue: 460, serpPosition: 38, geoScore: 42, source: 'reddit-miner', verdict: 'human-review', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2025-12-28',
     llmTestResults: [
       { engine: 'chatgpt', query: 'ResearchBot AI literature review', responseType: 'vague', citedSources: [], testedAt: '2026-03-08T15:00:00Z' },
       { engine: 'perplexity', query: 'best AI research assistant for papers', responseType: 'vague', citedSources: [], testedAt: '2026-03-08T15:10:00Z' },
@@ -386,8 +386,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-019', name: 'SlideScribe', description: 'Converts video lectures into interactive slide decks with AI-generated notes.', category: 'Education - Content Conversion',
-    score: { productNewness: 5, llmGapStrength: 5, buyingIntent: 4, affiliateAvailable: 3, googleGapStrength: 5, total: 22 },
-    status: 'draft', revenue: 0, serpPosition: null, geoScore: 15, source: 'kgr-weakspot', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2026-03-08',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 1, affiliateAvailable: 0, googleGapStrength: 1, total: 4 },
+    status: 'draft', revenue: 0, serpPosition: null, geoScore: 15, source: 'kgr-weakspot', verdict: 'auto-queue', gapStatus: 'double-gap', intent: 'how-to', launchedAt: '2026-03-08',
     llmTestResults: [
       { engine: 'chatgpt', query: 'SlideScribe video to slides AI', responseType: 'no-info', citedSources: [], testedAt: '2026-03-15T10:00:00Z' },
       { engine: 'perplexity', query: 'convert video lecture to slides AI', responseType: 'no-info', citedSources: [], testedAt: '2026-03-15T10:05:00Z' },
@@ -405,8 +405,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-020', name: 'HabitLoop', description: 'AI habit tracker with behavioural science insights and accountability features.', category: 'Productivity - Habits',
-    score: { productNewness: 3, llmGapStrength: 3, buyingIntent: 3, affiliateAvailable: 4, googleGapStrength: 3, total: 16 },
-    status: 'published', revenue: 640, serpPosition: 32, geoScore: 50, source: 'ai-proxy', gapStatus: 'closing', intent: 'informational', launchedAt: '2025-11-20',
+    score: { productNewness: 0, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 0, googleGapStrength: 0, total: 1 },
+    status: 'published', revenue: 640, serpPosition: 32, geoScore: 50, source: 'ai-proxy', verdict: 'discard', gapStatus: 'closing', intent: 'informational', launchedAt: '2025-11-20',
     llmTestResults: [
       { engine: 'chatgpt', query: 'HabitLoop AI habit tracker', responseType: 'generic', citedSources: [], testedAt: '2026-03-06T10:00:00Z' },
       { engine: 'copilot', query: 'best AI habit tracker app', responseType: 'generic', citedSources: ['habitica.com'], testedAt: '2026-03-06T10:10:00Z' },
@@ -422,8 +422,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-021', name: 'DocuMentor', description: 'AI documentation generator for SaaS teams with auto-updating knowledge bases.', category: 'Productivity - Documentation',
-    score: { productNewness: 4, llmGapStrength: 4, buyingIntent: 4, affiliateAvailable: 4, googleGapStrength: 4, total: 20 },
-    status: 'published', revenue: 520, serpPosition: 45, geoScore: 40, source: 'pseo-engine', gapStatus: 'double-gap', intent: 'informational', launchedAt: '2026-01-18',
+    score: { productNewness: 1, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 3 },
+    status: 'published', revenue: 520, serpPosition: 45, geoScore: 40, source: 'pseo-engine', verdict: 'human-review', gapStatus: 'double-gap', intent: 'informational', launchedAt: '2026-01-18',
     llmTestResults: [
       { engine: 'chatgpt', query: 'DocuMentor AI documentation generator', responseType: 'no-info', citedSources: [], testedAt: '2026-03-10T14:00:00Z' },
       { engine: 'perplexity', query: 'AI tool for SaaS documentation', responseType: 'vague', citedSources: [], testedAt: '2026-03-10T14:10:00Z' },
@@ -441,8 +441,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-022', name: 'ExamReady', description: 'AI exam preparation platform with predictive scoring and weakness identification.', category: 'Education - Exam Prep',
-    score: { productNewness: 5, llmGapStrength: 4, buyingIntent: 5, affiliateAvailable: 4, googleGapStrength: 4, total: 22 },
-    status: 'scheduled', revenue: 180, serpPosition: 56, geoScore: 32, source: 'yt-blog-overlap', gapStatus: 'double-gap', intent: 'review', launchedAt: '2026-02-28',
+    score: { productNewness: 1, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 3 },
+    status: 'scheduled', revenue: 180, serpPosition: 56, geoScore: 32, source: 'yt-blog-overlap', verdict: 'human-review', gapStatus: 'double-gap', intent: 'review', launchedAt: '2026-02-28',
     llmTestResults: [
       { engine: 'chatgpt', query: 'ExamReady AI exam prep review', responseType: 'no-info', citedSources: [], testedAt: '2026-03-12T11:00:00Z' },
       { engine: 'perplexity', query: 'AI exam score predictor', responseType: 'vague', citedSources: [], testedAt: '2026-03-12T11:10:00Z' },
@@ -462,8 +462,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-023', name: 'InboxZero AI', description: 'AI email management with smart categorisation, auto-replies, and follow-up reminders.', category: 'Productivity - Email',
-    score: { productNewness: 2, llmGapStrength: 2, buyingIntent: 4, affiliateAvailable: 4, googleGapStrength: 2, total: 14 },
-    status: 'published', revenue: 780, serpPosition: 52, geoScore: 35, source: 'serp-gap', gapStatus: 'saturated', intent: 'review', launchedAt: '2025-07-15',
+    score: { productNewness: 0, llmGapStrength: 0, buyingIntent: 1, affiliateAvailable: 1, googleGapStrength: 0, total: 2 },
+    status: 'published', revenue: 780, serpPosition: 52, geoScore: 35, source: 'serp-gap', verdict: 'discard', gapStatus: 'saturated', intent: 'review', launchedAt: '2025-07-15',
     llmTestResults: [
       { engine: 'chatgpt', query: 'InboxZero AI email management review', responseType: 'detailed', citedSources: ['inboxzero.ai'], testedAt: '2026-03-05T12:00:00Z' },
       { engine: 'perplexity', query: 'best AI email management tool', responseType: 'cites-sources', citedSources: ['superhuman.com', 'inboxzero.ai', 'sanebox.com'], testedAt: '2026-03-05T12:10:00Z' },
@@ -478,8 +478,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-024', name: 'CodeTutor', description: 'AI coding tutor with interactive exercises, code reviews, and personalised curricula.', category: 'Education - Coding',
-    score: { productNewness: 3, llmGapStrength: 1, buyingIntent: 5, affiliateAvailable: 5, googleGapStrength: 1, total: 15 },
-    status: 'failed', revenue: 0, serpPosition: 85, geoScore: 22, source: 'youtube-comments', gapStatus: 'saturated', intent: 'comparison', launchedAt: '2025-10-01',
+    score: { productNewness: 0, llmGapStrength: 0, buyingIntent: 0, affiliateAvailable: 1, googleGapStrength: 0, total: 1 },
+    status: 'failed', revenue: 0, serpPosition: 85, geoScore: 22, source: 'youtube-comments', verdict: 'discard', gapStatus: 'saturated', intent: 'comparison', launchedAt: '2025-10-01',
     llmTestResults: [
       { engine: 'chatgpt', query: 'CodeTutor AI coding lessons review', responseType: 'cites-sources', citedSources: ['codetutor.ai', 'codecademy.com'], testedAt: '2026-03-11T10:00:00Z' },
       { engine: 'perplexity', query: 'best AI coding tutor 2026', responseType: 'cites-sources', citedSources: ['codetutor.ai', 'github.com/copilot', 'replit.com'], testedAt: '2026-03-11T10:10:00Z' },
@@ -496,8 +496,8 @@ const products: Product[] = [
   },
   {
     id: 'prod-025', name: 'CalendarSense', description: 'AI calendar optimiser that schedules around energy levels and meeting fatigue.', category: 'Productivity - Calendar',
-    score: { productNewness: 5, llmGapStrength: 5, buyingIntent: 3, affiliateAvailable: 3, googleGapStrength: 4, total: 20 },
-    status: 'draft', revenue: 0, serpPosition: null, geoScore: 18, source: 'gsc-miner', gapStatus: 'double-gap', intent: 'informational', launchedAt: '2026-03-10',
+    score: { productNewness: 1, llmGapStrength: 1, buyingIntent: 0, affiliateAvailable: 1, googleGapStrength: 0, total: 3 },
+    status: 'draft', revenue: 0, serpPosition: null, geoScore: 18, source: 'gsc-miner', verdict: 'human-review', gapStatus: 'double-gap', intent: 'informational', launchedAt: '2026-03-10',
     llmTestResults: [
       { engine: 'chatgpt', query: 'CalendarSense AI scheduler', responseType: 'no-info', citedSources: [], testedAt: '2026-03-16T10:00:00Z' },
       { engine: 'perplexity', query: 'AI calendar optimiser energy levels', responseType: 'no-info', citedSources: [], testedAt: '2026-03-16T10:05:00Z' },

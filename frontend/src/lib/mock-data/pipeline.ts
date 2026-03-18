@@ -220,7 +220,7 @@ const queue: QueueItem[] = [
     id: 'q-009', productId: 'prod-012', productName: 'ResearchPal',
     type: 'generation', status: 'queued', priority: 'low',
     createdAt: '2026-03-16T12:15:00Z', startedAt: null, completedAt: null,
-    details: 'Queued for content generation — score 19/25',
+    details: 'Queued for content generation — score 4/5',
   },
   {
     id: 'q-010', productId: 'prod-005', productName: 'LessonPlan AI',

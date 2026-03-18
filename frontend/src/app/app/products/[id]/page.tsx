@@ -45,7 +45,7 @@ import {
 } from "@/components/dashboard";
 import { useAsyncData } from "@/lib/hooks/useAsyncData";
 import { getProductById } from "@/lib/mock-data/products";
-import type { ContentFormat, GapStatus, LlmTestResult } from "@/lib/types/domain";
+import type { ContentFormat, GapStatus, GapVerdict, LlmTestResult } from "@/lib/types/domain";
 import {
   LineChart,
   Line,
@@ -126,6 +126,16 @@ function GapStatusBadge({ status }: { status: GapStatus }) {
       {label}
     </span>
   );
+}
+
+function VerdictBadge({ verdict }: { verdict: GapVerdict }) {
+  const config: Record<GapVerdict, { label: string; className: string }> = {
+    'auto-queue': { label: 'Auto Queue', className: 'bg-green-100 text-green-800 border-green-200' },
+    'human-review': { label: 'Review', className: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
+    'discard': { label: 'Discard', className: 'bg-gray-100 text-gray-600 border-gray-200' },
+  };
+  const { label, className } = config[verdict];
+  return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${className}`}>{label}</span>;
 }
 
 // ── LLM Response Helpers ─────────────────────────────────────────────
@@ -215,6 +225,7 @@ export default function ProductDetailPage() {
             <ScoreBadge score={product.score.total} />
             <StatusBadge status={product.status} />
             <GapStatusBadge status={product.gapStatus} />
+            <VerdictBadge verdict={product.verdict} />
             <Badge variant="outline" className={intentColors[product.intent]}>
               {product.intent}
             </Badge>
@@ -254,7 +265,7 @@ export default function ProductDetailPage() {
             <div className="mt-4 pt-4 border-t flex items-center justify-between">
               <span className="text-sm font-medium text-gray-600">Total Score</span>
               <span className="text-lg font-bold text-gray-900">
-                {product.score.total}/25
+                {product.score.total}/5
               </span>
             </div>
           </CardContent>

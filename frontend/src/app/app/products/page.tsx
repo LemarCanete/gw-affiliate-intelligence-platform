@@ -24,7 +24,7 @@ import { PageHeader, ScoreBadge, StatusBadge } from "@/components/dashboard";
 import { AddProductModal } from "@/components/forms/AddProductModal";
 import { useAsyncData } from "@/lib/hooks/useAsyncData";
 import { getProducts } from "@/lib/mock-data/products";
-import type { Product, FeedType, PublishStatus, GapStatus } from "@/lib/types/domain";
+import type { Product, FeedType, PublishStatus, GapStatus, GapVerdict } from "@/lib/types/domain";
 
 // ── Helpers ──────────────────────────────────────────────────────────
 
@@ -63,6 +63,16 @@ function GapStatusBadge({ status }: { status: GapStatus }) {
     'saturated': { label: 'Saturated', className: 'bg-red-100 text-red-800 border-red-200' },
   };
   const { label, className } = config[status];
+  return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${className}`}>{label}</span>;
+}
+
+function VerdictBadge({ verdict }: { verdict: GapVerdict }) {
+  const config: Record<GapVerdict, { label: string; className: string }> = {
+    'auto-queue': { label: 'Auto Queue', className: 'bg-green-100 text-green-800 border-green-200' },
+    'human-review': { label: 'Review', className: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
+    'discard': { label: 'Discard', className: 'bg-gray-100 text-gray-600 border-gray-200' },
+  };
+  const { label, className } = config[verdict];
   return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${className}`}>{label}</span>;
 }
 
@@ -319,6 +329,7 @@ export default function ProductsPage() {
                     <SortableHeader label="Status" sortKeyVal="status" />
                   </TableHead>
                   <TableHead>Gap Status</TableHead>
+                  <TableHead>Verdict</TableHead>
                   <TableHead>Intent</TableHead>
                   <TableHead className="text-right">
                     <SortableHeader label="Revenue" sortKeyVal="revenue" />
@@ -340,7 +351,7 @@ export default function ProductsPage() {
               <TableBody>
                 {pageItems.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={11} className="text-center py-12 text-muted-foreground">
+                    <TableCell colSpan={12} className="text-center py-12 text-muted-foreground">
                       No products found.
                     </TableCell>
                   </TableRow>
@@ -367,6 +378,9 @@ export default function ProductsPage() {
                       </TableCell>
                       <TableCell>
                         <GapStatusBadge status={product.gapStatus} />
+                      </TableCell>
+                      <TableCell>
+                        <VerdictBadge verdict={product.verdict} />
                       </TableCell>
                       <TableCell className="text-sm capitalize text-muted-foreground">
                         {product.intent}

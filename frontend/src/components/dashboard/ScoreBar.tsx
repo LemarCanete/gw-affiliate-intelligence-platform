@@ -1,44 +1,41 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import type { ProductScore } from "@/lib/types/domain";
+import { Check, X } from "lucide-react";
 
 interface ScoreBarProps {
   score: ProductScore;
 }
 
-const CRITERIA: { key: keyof Omit<ProductScore, "total">; label: string }[] = [
-  { key: "productNewness", label: "Product Newness" },
-  { key: "llmGapStrength", label: "LLM Gap Strength" },
-  { key: "buyingIntent", label: "Buying Intent" },
-  { key: "affiliateAvailable", label: "Affiliate Available" },
-  { key: "googleGapStrength", label: "Google Gap Strength" },
+const CRITERIA: { key: keyof Omit<ProductScore, "total">; label: string; passLabel: string; failLabel: string }[] = [
+  { key: "productNewness", label: "Product < 90 days", passLabel: "Yes", failLabel: "No" },
+  { key: "llmGapStrength", label: "LLM gap confirmed", passLabel: "Yes", failLabel: "No" },
+  { key: "buyingIntent", label: "Buying intent", passLabel: "Yes", failLabel: "No" },
+  { key: "affiliateAvailable", label: "Affiliate program", passLabel: "Yes", failLabel: "No" },
+  { key: "googleGapStrength", label: "Google gap", passLabel: "Yes", failLabel: "No" },
 ];
-
-function getBarColor(value: number): string {
-  if (value >= 4) return "bg-green-500";
-  if (value >= 3) return "bg-yellow-500";
-  return "bg-red-500";
-}
 
 export function ScoreBar({ score }: ScoreBarProps) {
   return (
     <div className="space-y-3">
-      {CRITERIA.map(({ key, label }) => {
-        const value = score[key];
-        const widthPercent = (value / 5) * 100;
+      {CRITERIA.map(({ key, label, passLabel, failLabel }) => {
+        const passed = score[key] === 1;
 
         return (
-          <div key={key}>
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-sm text-gray-600">{label}</span>
-              <span className="text-sm font-semibold text-gray-900">{value}</span>
-            </div>
-            <div className="h-2 w-full rounded-full bg-gray-100">
-              <div
-                className={cn("h-2 rounded-full transition-all", getBarColor(value))}
-                style={{ width: `${widthPercent}%` }}
-              />
+          <div key={key} className="flex items-center justify-between">
+            <span className="text-sm text-gray-600">{label}</span>
+            <div className="flex items-center gap-1.5">
+              {passed ? (
+                <>
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-sm font-medium text-green-700">{passLabel}</span>
+                </>
+              ) : (
+                <>
+                  <X className="h-4 w-4 text-red-500" />
+                  <span className="text-sm font-medium text-red-600">{failLabel}</span>
+                </>
+              )}
             </div>
           </div>
         );

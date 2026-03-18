@@ -106,7 +106,7 @@ export async function getSystemConfig(): Promise<SystemConfig[]> {
   await delay();
   return [
     // Scoring
-    { key: 'scoring_threshold', label: 'Qualification Threshold', value: '18', type: 'number', category: 'scoring', description: 'Minimum score out of 25 for a product to qualify for content generation' },
+    { key: 'scoring_threshold', label: 'Auto-Queue Threshold', value: '4', type: 'number', category: 'scoring', description: 'Minimum score out of 5 for a product to be auto-queued for content generation' },
     { key: 'scoring_weight_search_volume', label: 'Search Volume Weight', value: '1.0', type: 'number', category: 'scoring', description: 'Multiplier for the search volume scoring dimension' },
     { key: 'scoring_weight_competition', label: 'Competition Weight', value: '1.0', type: 'number', category: 'scoring', description: 'Multiplier for the competition gap scoring dimension' },
     { key: 'scoring_weight_commission', label: 'Commission Weight', value: '1.0', type: 'number', category: 'scoring', description: 'Multiplier for the affiliate commission scoring dimension' },
@@ -195,7 +195,7 @@ export async function getErrorLogs(): Promise<ErrorLogEntry[]> {
     { id: 'err-001', timestamp: timeStr(0, 9, 52), severity: 'error', source: 'Pinterest API', message: 'Authentication token expired. Refresh failed: 401 Unauthorized.', count: 23 },
     { id: 'err-002', timestamp: timeStr(0, 9, 30), severity: 'warning', source: 'Reddit API', message: 'Rate limit approaching: 580/600 requests used. Throttling enabled.', count: 8 },
     { id: 'err-003', timestamp: timeStr(0, 8, 15), severity: 'error', source: 'Content Engine', message: 'Claude API timeout after 30s for brief generation (product: Gamma.app).', count: 2 },
-    { id: 'err-004', timestamp: timeStr(0, 6, 45), severity: 'info', source: 'Scoring Engine', message: 'Batch scoring completed: 12 products scored, 8 qualified (threshold 18/25).', count: 1 },
+    { id: 'err-004', timestamp: timeStr(0, 6, 45), severity: 'info', source: 'Scoring Engine', message: 'Batch scoring completed: 12 products scored, 8 auto-queued (threshold 4/5).', count: 1 },
     { id: 'err-005', timestamp: timeStr(1, 14, 20), severity: 'warning', source: 'WordPress REST', message: 'Slow response detected: average latency 2.3s over last 10 requests.', count: 5 },
     { id: 'err-006', timestamp: timeStr(1, 11, 0), severity: 'error', source: 'YouTube Data API', message: 'Quota exceeded for video upload. Daily limit reached.', count: 1 },
     { id: 'err-007', timestamp: timeStr(2, 16, 30), severity: 'info', source: 'Feed Scheduler', message: 'Daily discovery cron completed successfully. 47 new items discovered.', count: 1 },

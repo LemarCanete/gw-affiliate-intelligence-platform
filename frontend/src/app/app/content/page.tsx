@@ -248,7 +248,7 @@ function ContentBriefsTab() {
       <EmptyState
         icon={FileText}
         title="No content briefs"
-        description="Content briefs are generated from scored products that pass the 18/25 threshold."
+        description="Content briefs are generated from scored products that pass the 4/5 threshold (auto-queue)."
       />
     );
   }

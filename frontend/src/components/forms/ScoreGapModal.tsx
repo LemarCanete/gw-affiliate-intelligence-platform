@@ -26,72 +26,42 @@ interface ScoreGapModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const PRODUCT_NEWNESS_OPTIONS = [
-  { value: "1", label: "1 - Older than 180d" },
-  { value: "2", label: "2 - 90-180 days" },
-  { value: "3", label: "3 - 60-90 days" },
-  { value: "4", label: "4 - 30-60 days" },
-  { value: "5", label: "5 - Under 30 days" },
+const SCORE_FACTORS: {
+  key: string;
+  label: string;
+  yesLabel: string;
+  noLabel: string;
+}[] = [
+  { key: "productNewness", label: "Product launched < 90 days?", yesLabel: "Yes - launched recently", noLabel: "No - older than 90 days" },
+  { key: "llmGap", label: "LLM gives weak/no answer?", yesLabel: "Yes - weak or no answer", noLabel: "No - LLM answers well" },
+  { key: "buyingIntent", label: "Query has buying intent?", yesLabel: "Yes - buying intent present", noLabel: "No - no buying intent" },
+  { key: "affiliate", label: "Affiliate program exists?", yesLabel: "Yes - program available", noLabel: "No - no program found" },
+  { key: "googleGap", label: "Google results are thin?", yesLabel: "Yes - thin results", noLabel: "No - results are strong" },
 ];
 
-const LLM_GAP_OPTIONS = [
-  { value: "1", label: "1 - Confident answers" },
-  { value: "2", label: "2 - Detailed" },
-  { value: "3", label: "3 - Generic" },
-  { value: "4", label: "4 - Vague" },
-  { value: "5", label: "5 - No info" },
-];
-
-const BUYING_INTENT_OPTIONS = [
-  { value: "1", label: "1 - Branded" },
-  { value: "2", label: "2 - Navigational" },
-  { value: "3", label: "3 - Informational" },
-  { value: "4", label: "4 - How-to" },
-  { value: "5", label: "5 - Comparison/Review" },
-];
-
-const AFFILIATE_OPTIONS = [
-  { value: "1", label: "1 - None" },
-  { value: "2", label: "2 - Under 10%" },
-  { value: "3", label: "3 - 10-20%" },
-  { value: "4", label: "4 - 20-30%" },
-  { value: "5", label: "5 - 30%+ recurring" },
-];
-
-const GOOGLE_GAP_OPTIONS = [
-  { value: "1", label: "1 - Saturated" },
-  { value: "2", label: "2 - Some competition" },
-  { value: "3", label: "3 - Thin DA90+" },
-  { value: "4", label: "4 - Only forums" },
-  { value: "5", label: "5 - No content" },
-];
-
-function ScoreField({
+function ToggleField({
   label,
   value,
   onValueChange,
-  options,
-  placeholder,
+  yesLabel,
+  noLabel,
 }: {
   label: string;
   value: string;
   onValueChange: (value: string) => void;
-  options: { value: string; label: string }[];
-  placeholder?: string;
+  yesLabel: string;
+  noLabel: string;
 }) {
   return (
     <div className="space-y-1.5">
       <label className="text-sm font-medium text-gray-700">{label}</label>
       <Select value={value} onValueChange={onValueChange}>
         <SelectTrigger>
-          <SelectValue placeholder={placeholder || "Select..."} />
+          <SelectValue placeholder="Select..." />
         </SelectTrigger>
         <SelectContent>
-          {options.map((opt) => (
-            <SelectItem key={opt.value} value={opt.value}>
-              {opt.label}
-            </SelectItem>
-          ))}
+          <SelectItem value="1">{yesLabel}</SelectItem>
+          <SelectItem value="0">{noLabel}</SelectItem>
         </SelectContent>
       </Select>
     </div>
@@ -99,24 +69,21 @@ function ScoreField({
 }
 
 function getVerdictColor(total: number): string {
-  if (total >= 22) return "text-green-600";
-  if (total >= 18) return "text-blue-600";
-  if (total >= 14) return "text-yellow-600";
+  if (total >= 4) return "text-green-600";
+  if (total === 3) return "text-yellow-600";
   return "text-gray-400";
 }
 
 function getVerdictBgColor(total: number): string {
-  if (total >= 22) return "bg-green-50 border-green-200";
-  if (total >= 18) return "bg-blue-50 border-blue-200";
-  if (total >= 14) return "bg-yellow-50 border-yellow-200";
+  if (total >= 4) return "bg-green-50 border-green-200";
+  if (total === 3) return "bg-yellow-50 border-yellow-200";
   return "bg-gray-50 border-gray-200";
 }
 
 function getVerdict(total: number): string {
-  if (total >= 22) return "Write Immediately";
-  if (total >= 18) return "Worth Pursuing";
-  if (total >= 14) return "Monitor";
-  return "Skip";
+  if (total >= 4) return "Auto Queue";
+  if (total === 3) return "Human Review";
+  return "Discard";
 }
 
 export function ScoreGapModal({ open, onOpenChange }: ScoreGapModalProps) {
@@ -182,7 +149,7 @@ export function ScoreGapModal({ open, onOpenChange }: ScoreGapModalProps) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     setSuccess(
-      `Gap scored: ${productName} \u2014 ${total}/25 \u2014 ${verdict}`
+      `Gap scored: ${productName} \u2014 ${total}/5 \u2014 ${verdict}`
     );
 
     setTimeout(() => {
@@ -190,13 +157,16 @@ export function ScoreGapModal({ open, onOpenChange }: ScoreGapModalProps) {
     }, 1500);
   }
 
+  const setters = [setProductNewness, setLlmGap, setBuyingIntent, setAffiliate, setGoogleGap];
+  const values = [productNewness, llmGap, buyingIntent, affiliate, googleGap];
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[640px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Score New Gap Opportunity</DialogTitle>
           <DialogDescription>
-            Evaluate a product against the 5-point gap scoring criteria.
+            Evaluate a product against the 5 pass/fail criteria. Score 4-5 = auto-queue, 3 = human review, 0-2 = discard.
           </DialogDescription>
         </DialogHeader>
 
@@ -237,41 +207,16 @@ export function ScoreGapModal({ open, onOpenChange }: ScoreGapModalProps) {
 
             {/* Score fields */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <ScoreField
-                label="Product Newness (1-5)"
-                value={productNewness}
-                onValueChange={setProductNewness}
-                options={PRODUCT_NEWNESS_OPTIONS}
-                placeholder="Select newness..."
-              />
-              <ScoreField
-                label="LLM Gap Strength (1-5)"
-                value={llmGap}
-                onValueChange={setLlmGap}
-                options={LLM_GAP_OPTIONS}
-                placeholder="Select LLM gap..."
-              />
-              <ScoreField
-                label="Buying Intent (1-5)"
-                value={buyingIntent}
-                onValueChange={setBuyingIntent}
-                options={BUYING_INTENT_OPTIONS}
-                placeholder="Select intent..."
-              />
-              <ScoreField
-                label="Affiliate Available (1-5)"
-                value={affiliate}
-                onValueChange={setAffiliate}
-                options={AFFILIATE_OPTIONS}
-                placeholder="Select affiliate..."
-              />
-              <ScoreField
-                label="Google Gap Strength (1-5)"
-                value={googleGap}
-                onValueChange={setGoogleGap}
-                options={GOOGLE_GAP_OPTIONS}
-                placeholder="Select Google gap..."
-              />
+              {SCORE_FACTORS.map((factor, idx) => (
+                <ToggleField
+                  key={factor.key}
+                  label={factor.label}
+                  value={values[idx]}
+                  onValueChange={setters[idx]}
+                  yesLabel={factor.yesLabel}
+                  noLabel={factor.noLabel}
+                />
+              ))}
             </div>
 
             {/* Notes */}
@@ -296,7 +241,7 @@ export function ScoreGapModal({ open, onOpenChange }: ScoreGapModalProps) {
                   >
                     {total}
                   </span>
-                  <span className="text-sm text-gray-500">/25</span>
+                  <span className="text-sm text-gray-500">/5</span>
                 </div>
                 <span
                   className={`text-sm font-semibold ${getVerdictColor(total)}`}

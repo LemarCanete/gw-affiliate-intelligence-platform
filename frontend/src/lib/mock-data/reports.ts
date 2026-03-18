@@ -84,7 +84,7 @@ const reports: WeeklyReport[] = [
     productsScored: 25,
     contentPublished: 6,
     summary:
-      'Slight dip after the January surge. Content output was lower due to Claude API rate limits. EduFlow and SkillPath AI articles published. Two products dropped below the 18-point threshold after re-scoring.',
+      'Slight dip after the January surge. Content output was lower due to Claude API rate limits. EduFlow and SkillPath AI articles published. Two products moved from auto-queue to human-review after re-scoring.',
     generatedAt: '2026-02-10T06:00:00Z',
   },
   {
@@ -169,7 +169,7 @@ const reports: WeeklyReport[] = [
     productsScored: 64,
     contentPublished: 18,
     summary:
-      'Launch month. Platform went live January 6th. Established content publishing pipeline with 18 pieces across 5 formats. 10 products scored above the 18-point threshold. First affiliate payments received totalling $3,240. Set up all 8 intelligence feeds with 6 reaching healthy status by month end.',
+      'Launch month. Platform went live January 6th. Established content publishing pipeline with 18 pieces across 5 formats. 10 products auto-queued (scored 4-5 out of 5). First affiliate payments received totalling $3,240. Set up all 8 intelligence feeds with 6 reaching healthy status by month end.',
     generatedAt: '2026-02-01T06:00:00Z',
   },
 ];

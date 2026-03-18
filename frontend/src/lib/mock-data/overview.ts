@@ -93,7 +93,7 @@ export async function getAlerts(): Promise<Alert[]> {
       id: 'alert-007',
       type: 'info',
       title: 'New Product Discovered: CalendarSense',
-      message: 'GSC Keyword Miner found a new opportunity with a score of 16/25. Below threshold but trending upward.',
+      message: 'GSC Keyword Miner found a new opportunity with a score of 3/5. Flagged for human review.',
       timestamp: '2026-03-16T10:00:00Z',
     },
     {
