@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader, ScoreBadge, StatusBadge } from "@/components/dashboard";
 import { AddProductModal } from "@/components/forms/AddProductModal";
 import { useAsyncData } from "@/lib/hooks/useAsyncData";
-import { getProducts } from "@/lib/mock-data/products";
+import { getProducts } from "@/lib/data/products";
 import type { Product, FeedType, PublishStatus, GapStatus, GapVerdict } from "@/lib/types/domain";
 
 // ── Helpers ──────────────────────────────────────────────────────────
@@ -155,7 +155,7 @@ const CATEGORIES = [
 
 export default function ProductsPage() {
   const fetcher = useCallback(() => getProducts(), []);
-  const { data: products, loading } = useAsyncData(fetcher);
+  const { data: products, loading, refetch } = useAsyncData(fetcher);
 
   // Add Product modal
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -440,7 +440,7 @@ export default function ProductsPage() {
           )}
         </>
       )}
-      <AddProductModal open={addModalOpen} onOpenChange={setAddModalOpen} />
+      <AddProductModal open={addModalOpen} onOpenChange={setAddModalOpen} onSuccess={refetch} />
     </div>
   );
 }

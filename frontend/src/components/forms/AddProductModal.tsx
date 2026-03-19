@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { createProduct } from "@/lib/data/products";
 
 const CATEGORIES = [
   "Education - Study Tools",
@@ -53,9 +54,10 @@ const INTENTS = ["informational", "comparison", "review", "how-to"];
 interface AddProductModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSuccess?: () => void;
 }
 
-export function AddProductModal({ open, onOpenChange }: AddProductModalProps) {
+export function AddProductModal({ open, onOpenChange, onSuccess }: AddProductModalProps) {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
@@ -64,6 +66,7 @@ export function AddProductModal({ open, onOpenChange }: AddProductModalProps) {
   const [affiliateNetwork, setAffiliateNetwork] = useState("");
   const [commissionRate, setCommissionRate] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const handleReset = () => {
     setName("");
@@ -75,18 +78,33 @@ export function AddProductModal({ open, onOpenChange }: AddProductModalProps) {
     setCommissionRate("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!name.trim() || !url.trim()) return;
 
-    setSuccessMessage(`"${name}" has been added successfully.`);
-    handleReset();
+    setSaving(true);
+    const productId = await createProduct({
+      name: name.trim(),
+      description: description.trim() || undefined,
+      productUrl: url.trim(),
+      category: category || undefined,
+      intent: (intent as "informational" | "comparison" | "review" | "how-to") || undefined,
+      affiliateNetwork: affiliateNetwork.trim() || undefined,
+      affiliateCommission: commissionRate.trim() || undefined,
+    });
+    setSaving(false);
 
-    setTimeout(() => {
-      setSuccessMessage("");
-      onOpenChange(false);
-    }, 1500);
+    if (productId) {
+      setSuccessMessage(`"${name}" has been added successfully.`);
+      handleReset();
+      setTimeout(() => {
+        setSuccessMessage("");
+        onOpenChange(false);
+        onSuccess?.();
+      }, 1500);
+    } else {
+      setSuccessMessage("Failed to add product. Please try again.");
+    }
   };
 
   const handleOpenChange = (value: boolean) => {
@@ -245,9 +263,9 @@ export function AddProductModal({ open, onOpenChange }: AddProductModalProps) {
             <Button
               type="submit"
               className="bg-primary-600 text-white hover:bg-primary-700"
-              disabled={!name.trim() || !url.trim() || !!successMessage}
+              disabled={!name.trim() || !url.trim() || !!successMessage || saving}
             >
-              Add Product
+              {saving ? "Saving..." : "Add Product"}
             </Button>
           </DialogFooter>
         </form>

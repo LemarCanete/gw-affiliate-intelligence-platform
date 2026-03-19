@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+httpx
+supabase
+python-dotenv
+anthropic
+apscheduler
+feedparser
+pydantic
+pydantic-settings

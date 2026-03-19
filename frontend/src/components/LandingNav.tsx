@@ -130,9 +130,7 @@ export default function LandingNav() {
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
-              <Radar className="w-4 h-4 text-white" />
-            </div>
+            <img src="/gigwavelogo.png" alt="GW" className="w-8 h-8 object-contain" />
             <span className="text-xl font-bold text-gray-900 tracking-tight">
               {productName}
             </span>

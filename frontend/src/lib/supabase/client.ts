@@ -1,9 +1,9 @@
 import {createBrowserClient} from '@supabase/ssr'
 import {ClientType, SassClient} from "@/lib/supabase/unified";
-import {Database} from "@/lib/types";
 
 export function createSPAClient() {
-    return createBrowserClient<Database, "public", Database["public"]>(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return createBrowserClient<any>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )

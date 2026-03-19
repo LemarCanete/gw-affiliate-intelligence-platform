@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { apiPost } from "@/lib/api";
 import {
   CheckCircle,
   XCircle,
@@ -22,6 +23,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/dashboard";
+import { getUserSettings, saveUserSettings } from "@/lib/data/settings";
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -116,32 +118,67 @@ function WordPressCard() {
   const [testing, setTesting] = useState(false);
   const [testResult, setTestResult] = useState<string | null>(null);
 
+  // Pre-populate from Supabase user_settings if available
+  useEffect(() => {
+    getUserSettings().then((settings) => {
+      if (settings?.wp_connected) {
+        setConnection({
+          siteUrl: (settings.wp_site_url as string) ?? "",
+          username: (settings.wp_username as string) ?? "",
+          seoPlugin: (settings.wp_seo_plugin as string) ?? "Yoast SEO",
+          connectedAt: (settings.wp_connected_at as string) ?? new Date().toISOString(),
+        });
+      } else if (settings && settings.wp_connected === false) {
+        setConnection(null);
+      }
+    });
+  }, []);
+
   const handleTestConnection = async () => {
     setTesting(true);
     setTestResult(null);
-    // Simulate 2s connection check
-    await new Promise((r) => setTimeout(r, 2000));
-    setTesting(false);
-    setTestResult("Connected! Detected: Yoast SEO");
+    try {
+      const data = await apiPost("/api/wordpress/test", {
+        site_url: formUrl,
+        username: formUser,
+        app_password: formPass,
+      });
+      if (data.connected) {
+        setTestResult(`Connected! Detected: ${data.seo_plugin ? (data.seo_plugin === "yoast" ? "Yoast SEO" : "RankMath") : "No SEO plugin"}`);
+      } else {
+        setTestResult(`Failed: ${data.error || "Could not connect"}`);
+      }
+    } catch (err) {
+      setTestResult(`Failed: ${err instanceof Error ? err.message : "Connection error"}`);
+    } finally {
+      setTesting(false);
+    }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    const now = new Date().toISOString();
     setConnection({
       siteUrl: formUrl,
       username: formUser,
       seoPlugin: "Yoast SEO",
-      connectedAt: new Date().toISOString(),
+      connectedAt: now,
     });
     setFormUrl("");
     setFormUser("");
     setFormPass("");
     setTestResult(null);
-    console.log("WordPress connection saved:", { formUrl, formUser });
+    await saveUserSettings({
+      wp_connected: true,
+      wp_site_url: formUrl,
+      wp_username: formUser,
+      wp_seo_plugin: "Yoast SEO",
+      wp_connected_at: now,
+    });
   };
 
-  const handleDisconnect = () => {
+  const handleDisconnect = async () => {
     setConnection(null);
-    console.log("WordPress disconnected");
+    await saveUserSettings({ wp_connected: false });
   };
 
   return (

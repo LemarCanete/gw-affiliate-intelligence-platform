@@ -91,9 +91,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 {/* Header */}
                 <div className="h-16 flex items-center justify-between px-3 border-b">
                     <div className={`flex items-center gap-2 overflow-hidden ${isCollapsed ? 'justify-center w-full' : ''}`}>
-                        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shrink-0">
-                            <Radar className="w-3.5 h-3.5 text-white" />
-                        </div>
+                        <img src="/gigwavelogo.png" alt="GW" className="w-7 h-7 object-contain shrink-0" />
                         {!isCollapsed && (
                             <span className="text-lg font-bold text-gray-900 tracking-tight whitespace-nowrap">
                                 {productName}

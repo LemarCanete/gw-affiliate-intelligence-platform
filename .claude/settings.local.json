@@ -5,7 +5,11 @@
       "mcp__playwright__browser_navigate",
       "mcp__playwright__browser_take_screenshot",
       "mcp__playwright__browser_install",
-      "mcp__playwright__browser_close"
+      "mcp__playwright__browser_close",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__list_migrations",
+      "mcp__supabase__apply_migration",
+      "mcp__supabase__generate_typescript_types"
     ]
   }
 }

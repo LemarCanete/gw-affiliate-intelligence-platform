@@ -44,7 +44,7 @@ import {
   EmptyState,
 } from "@/components/dashboard";
 import { useAsyncData } from "@/lib/hooks/useAsyncData";
-import { getProductById } from "@/lib/mock-data/products";
+import { getProductById } from "@/lib/data/products";
 import type { ContentFormat, GapStatus, GapVerdict, LlmTestResult } from "@/lib/types/domain";
 import {
   LineChart,
@@ -501,7 +501,7 @@ export default function ProductDetailPage() {
         </TabsContent>
       </Tabs>
 
-      <RunLlmTestModal open={llmTestOpen} onOpenChange={setLlmTestOpen} productName={product.name} />
+      <RunLlmTestModal open={llmTestOpen} onOpenChange={setLlmTestOpen} productName={product.name} productId={product.id} />
       <CreateBriefModal open={briefOpen} onOpenChange={setBriefOpen} productName={product.name} />
       <GenerateContentModal open={generateOpen} onOpenChange={setGenerateOpen} productName={product.name} />
     </div>

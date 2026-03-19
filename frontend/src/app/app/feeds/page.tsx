@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { PageHeader } from "@/components/dashboard/PageHeader";
 import { FeedCard } from "@/components/dashboard/FeedCard";
 import { useAsyncData } from "@/lib/hooks/useAsyncData";
-import { getFeeds } from "@/lib/mock-data/feeds";
+import { getFeeds } from "@/lib/data/feeds";
 import type { FeedStatus } from "@/lib/types/domain";
 
 export default function FeedsPage() {

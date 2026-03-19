@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 import Link from 'next/link';
-import { ArrowLeft, Radar } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export default function AuthLayout({
                                        children,
@@ -42,9 +42,7 @@ export default function AuthLayout({
 
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="flex items-center justify-center gap-2 mb-2">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
-                            <Radar className="w-4 h-4 text-white" />
-                        </div>
+                        <img src="/gigwavelogo.png" alt="GW" className="w-8 h-8 object-contain" />
                         <h2 className="text-2xl font-bold tracking-tight text-gray-900">
                             {productName}
                         </h2>

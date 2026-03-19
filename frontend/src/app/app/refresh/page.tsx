@@ -26,7 +26,7 @@ import {
   type RefreshAlert,
   type RefreshSeverity,
   type RefreshTriggerType,
-} from "@/lib/mock-data/refresh";
+} from "@/lib/data/refresh";
 
 // ── Constants ───────────────────────────────────────────────────────
 

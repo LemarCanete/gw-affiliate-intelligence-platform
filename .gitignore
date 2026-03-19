@@ -1,0 +1,21 @@
+# Claude Code
+.claude/
+CLAUDE.md
+
+# Playwright MCP
+.playwright-mcp/
+
+# Documentation (sensitive specs)
+docs/
+
+# n8n workflows (boss's private flows)
+n8n/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -12,16 +12,19 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { apiPost } from "@/lib/api";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   productName: string;
+  productId?: string;
+  onSuccess?: () => void;
 }
 
 const ENGINES = ["ChatGPT", "Perplexity", "Gemini", "Copilot"] as const;
 
-export function RunLlmTestModal({ open, onOpenChange, productName }: Props) {
+export function RunLlmTestModal({ open, onOpenChange, productName, productId, onSuccess }: Props) {
   const [selectedEngines, setSelectedEngines] = useState<Set<string>>(
     new Set(ENGINES)
   );
@@ -47,15 +50,33 @@ export function RunLlmTestModal({ open, onOpenChange, productName }: Props) {
     });
   };
 
-  const handleSubmit = () => {
+  const [error, setError] = useState("");
+  const [results, setResults] = useState<{ engine: string; response_type: string }[]>([]);
+
+  const handleSubmit = async () => {
     if (!query.trim() || selectedEngines.size === 0) return;
     setStatus("loading");
-    setTimeout(() => {
+    setError("");
+
+    try {
+      if (productId) {
+        const engines = Array.from(selectedEngines).map((e) => e.toLowerCase());
+        const data = await apiPost("/api/llm/validate", {
+          product_id: productId,
+          engines,
+          query: query.trim(),
+        });
+        setResults(data.results || []);
+      }
       setStatus("success");
       setTimeout(() => {
         handleClose();
-      }, 1500);
-    }, 2000);
+        onSuccess?.();
+      }, 2000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Test failed");
+      setStatus("idle");
+    }
   };
 
   const handleClose = () => {
@@ -75,13 +96,28 @@ export function RunLlmTestModal({ open, onOpenChange, productName }: Props) {
           </DialogDescription>
         </DialogHeader>
 
+        {error && (
+          <div className="rounded-md bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-800">
+            {error}
+          </div>
+        )}
+
         {status === "success" ? (
-          <div className="flex flex-col items-center gap-3 py-6">
+          <div className="flex flex-col items-center gap-3 py-4">
             <CheckCircle className="h-10 w-10 text-green-500" />
             <p className="text-sm font-medium text-gray-900">
-              LLM tests queued for {selectedEngines.size} engine
-              {selectedEngines.size !== 1 ? "s" : ""}
+              LLM tests completed for {results.length || selectedEngines.size} engine{(results.length || selectedEngines.size) !== 1 ? "s" : ""}
             </p>
+            {results.length > 0 && (
+              <div className="w-full space-y-1 mt-2">
+                {results.map((r, i) => (
+                  <div key={i} className="flex justify-between text-sm px-3 py-1.5 bg-gray-50 rounded">
+                    <span className="capitalize font-medium">{r.engine}</span>
+                    <span className="text-gray-600">{r.response_type}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div className="space-y-4">
