@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     producthunt_token: str = ""
     producthunt_api_key: str = ""
     producthunt_api_secret: str = ""
+    serpapi_key: str = ""
+    openrouter_api_key: str = ""
 
     class Config:
         env_file = ".env"

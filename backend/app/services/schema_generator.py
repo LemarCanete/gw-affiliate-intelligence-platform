@@ -108,3 +108,67 @@ def generate_local_business_schema(
     if price_range:
         schema["priceRange"] = price_range
     return f'<script type="application/ld+json">{json.dumps(schema, indent=2)}</script>'
+
+
+def generate_breadcrumb_schema(
+    items: list[dict],
+) -> str:
+    """Generate BreadcrumbList schema JSON-LD. Required on ALL posts.
+    Each item is {name: str, url: str}. First item is Home, last is current page."""
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": item["name"],
+                "item": item["url"],
+            }
+            for i, item in enumerate(items)
+        ],
+    }
+    return f'<script type="application/ld+json">{json.dumps(schema, indent=2)}</script>'
+
+
+def generate_article_schema(
+    headline: str,
+    author_name: str,
+    author_url: str,
+    published_url: str,
+    image_url: str = "",
+    keywords: str = "",
+    date_published: str = "",
+    date_modified: str = "",
+    publisher_name: str = "",
+    publisher_logo: str = "",
+) -> str:
+    """Generate Article schema JSON-LD for Explainer, How-To, Comparison content types."""
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": headline[:110],
+        "author": {
+            "@type": "Person",
+            "name": author_name,
+            "url": author_url,
+        },
+        "url": published_url,
+        "datePublished": date_published or datetime.utcnow().strftime("%Y-%m-%d"),
+        "dateModified": date_modified or datetime.utcnow().strftime("%Y-%m-%d"),
+    }
+    if image_url:
+        schema["image"] = image_url
+    if keywords:
+        schema["keywords"] = keywords
+    if publisher_name:
+        schema["publisher"] = {
+            "@type": "Organization",
+            "name": publisher_name,
+        }
+        if publisher_logo:
+            schema["publisher"]["logo"] = {
+                "@type": "ImageObject",
+                "url": publisher_logo,
+            }
+    return f'<script type="application/ld+json">{json.dumps(schema, indent=2)}</script>'

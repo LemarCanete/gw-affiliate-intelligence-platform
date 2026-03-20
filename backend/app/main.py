@@ -3,10 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import (
     feeds,
+    indexing,
     llm_validation,
     monitoring,
     products,
     schema,
+    serp,
     validation,
     wordpress,
 )
@@ -30,6 +32,8 @@ app.include_router(monitoring.router, prefix="/api/monitoring", tags=["monitorin
 app.include_router(wordpress.router, prefix="/api/wordpress", tags=["wordpress"])
 app.include_router(validation.router, prefix="/api/validation", tags=["validation"])
 app.include_router(schema.router, prefix="/api/schema", tags=["schema"])
+app.include_router(serp.router, prefix="/api/serp", tags=["serp"])
+app.include_router(indexing.router, prefix="/api/indexing", tags=["indexing"])
 
 
 @app.get("/health")

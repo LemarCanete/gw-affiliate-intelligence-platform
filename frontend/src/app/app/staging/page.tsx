@@ -17,13 +17,12 @@ import { PageHeader } from "@/components/dashboard";
 
 // ── Types ────────────────────────────────────────────────────────────
 
-type ContentType = "Review" | "Comparison" | "Explainer";
+type ContentType = "SEO Article" | "Comparison" | "Explainer" | "How-To Guide";
 type StagingStatus = "pending" | "approved" | "rejected";
 
 interface StagedItem {
   id: string;
   title: string;
-  productName: string;
   contentType: ContentType;
   primaryKeyword: string;
   wordCount: number;
@@ -43,109 +42,95 @@ interface StagedItem {
 const MOCK_ITEMS: StagedItem[] = [
   {
     id: "stg-1",
-    title: "Best AI Writing Assistants for Students in 2026",
-    productName: "Jasper AI",
-    contentType: "Review",
-    primaryKeyword: "best ai writing assistant students",
-    wordCount: 2340,
+    title: "Best AI Writing Tools 2026",
+    contentType: "SEO Article",
+    primaryKeyword: "best ai writing tools",
+    wordCount: 2400,
     faqCount: 7,
-    neuronScore: 74,
+    neuronScore: 78,
     seoChecks: { passed: 14, total: 16 },
     validationWarnings: [],
     snippet:
-      "Finding the right AI writing assistant can dramatically improve academic productivity. In this review, we compare the top tools designed specifically for students, evaluating ease of use, plagiarism safeguards, and pricing tiers that fit a student budget...",
+      "The AI writing tools landscape has exploded in 2026, with dozens of new entrants challenging established players. In this comprehensive guide, we evaluate the top tools by output quality, ease of use, and value for content teams...",
     status: "pending",
   },
   {
     id: "stg-2",
-    title: "Notion AI vs Obsidian AI: Which Note-Taking Tool Wins?",
-    productName: "Notion AI",
+    title: "Jasper AI vs Copy.ai: Which Is Better?",
     contentType: "Comparison",
-    primaryKeyword: "notion ai vs obsidian ai",
-    wordCount: 2780,
+    primaryKeyword: "jasper ai vs copy ai",
+    wordCount: 2100,
     faqCount: 6,
-    neuronScore: 68,
+    neuronScore: 72,
     seoChecks: { passed: 13, total: 16 },
     validationWarnings: ["Primary keyword missing from H2"],
     snippet:
-      "The AI-powered note-taking space is heating up, with Notion AI and Obsidian AI emerging as the top contenders. Both offer intelligent features, but they take very different approaches to knowledge management...",
+      "Jasper AI and Copy.ai are the two most popular AI writing platforms for marketing teams. Both have evolved significantly, but they take fundamentally different approaches to content generation and workflow integration...",
     status: "pending",
   },
   {
     id: "stg-3",
-    title: "How Grammarly AI Coach Transforms Essay Writing",
-    productName: "Grammarly",
+    title: "What Is GEO? Complete Guide",
     contentType: "Explainer",
-    primaryKeyword: "grammarly ai essay writing",
-    wordCount: 1180,
-    faqCount: 5,
-    neuronScore: 52,
-    seoChecks: { passed: 10, total: 16 },
-    validationWarnings: [
-      "Word count below 1,200",
-      "Missing alt text on 2 images",
-    ],
+    primaryKeyword: "what is geo",
+    wordCount: 1800,
+    faqCount: 8,
+    neuronScore: 68,
+    seoChecks: { passed: 12, total: 16 },
+    validationWarnings: ["Missing internal links"],
     snippet:
-      "Grammarly's AI Coach goes beyond basic grammar checking. It now analyses your writing style, suggests structural improvements, and even helps with tone adjustments for academic papers...",
+      "Generative Engine Optimisation (GEO) is the practice of optimising content to appear as citations in AI-generated responses. As LLMs like ChatGPT, Perplexity, and Gemini reshape how users find information, GEO has become essential...",
     status: "pending",
   },
   {
     id: "stg-4",
-    title: "Quillbot vs Wordtune: AI Paraphrasing Tools Compared",
-    productName: "Quillbot",
-    contentType: "Comparison",
-    primaryKeyword: "quillbot vs wordtune",
-    wordCount: 1950,
-    faqCount: 8,
-    neuronScore: 45,
-    seoChecks: { passed: 9, total: 16 },
-    validationWarnings: [
-      "NeuronWriter score below 50",
-      "Primary keyword density too low",
-      "Missing internal links",
-    ],
+    title: "How to Optimise Content for AI Citations",
+    contentType: "How-To Guide",
+    primaryKeyword: "optimise content ai citations",
+    wordCount: 2200,
+    faqCount: 6,
+    neuronScore: 74,
+    seoChecks: { passed: 14, total: 16 },
+    validationWarnings: [],
     snippet:
-      "Paraphrasing tools have become essential for content creators and students alike. Quillbot and Wordtune are the two most popular options, but they differ significantly in approach and quality of output...",
+      "Getting your content cited by AI engines requires a different approach than traditional SEO. This step-by-step guide covers structured data, authority signals, and content formatting patterns that increase your citation rate...",
     status: "pending",
   },
   {
     id: "stg-5",
-    title: "Scholarcy Review: AI-Powered Research Summarizer",
-    productName: "Scholarcy",
-    contentType: "Review",
-    primaryKeyword: "scholarcy review ai research",
-    wordCount: 2100,
-    faqCount: 6,
-    neuronScore: 78,
+    title: "Surfer SEO vs NeuronWriter: Content Optimisation Showdown",
+    contentType: "Comparison",
+    primaryKeyword: "surfer seo vs neuronwriter",
+    wordCount: 2300,
+    faqCount: 7,
+    neuronScore: 82,
     seoChecks: { passed: 15, total: 16 },
     validationWarnings: [],
     snippet:
-      "Scholarcy promises to cut your research reading time in half using AI summarisation. After three months of heavy use across academic papers and industry reports, here is our full verdict...",
+      "Content optimisation tools are critical for hitting target NeuronWriter scores. Surfer SEO and NeuronWriter both offer real-time content grading, but their scoring algorithms and feature sets differ in important ways...",
     status: "approved",
     approvedAt: "2026-03-15T14:30:00Z",
   },
   {
     id: "stg-6",
-    title: "Otter.ai for Lecture Notes: Complete Student Guide",
-    productName: "Otter.ai",
-    contentType: "Explainer",
-    primaryKeyword: "otter ai lecture notes",
-    wordCount: 1650,
+    title: "AI Productivity Tools for Students: 2026 Guide",
+    contentType: "SEO Article",
+    primaryKeyword: "ai productivity tools students",
+    wordCount: 2050,
     faqCount: 7,
-    neuronScore: 82,
+    neuronScore: 80,
     seoChecks: { passed: 14, total: 16 },
     validationWarnings: [],
     snippet:
-      "Otter.ai has become a must-have for students who want accurate, searchable transcripts of their lectures. This guide covers setup, best practices, and tips for getting the most out of the free tier...",
+      "Students in 2026 have access to a growing ecosystem of AI-powered productivity tools. From note-taking to research summarisation, this guide covers the best free and affordable options for academic workflows...",
     status: "approved",
     approvedAt: "2026-03-16T09:15:00Z",
   },
   {
     id: "stg-7",
-    title: "Mem AI Review: AI-First Knowledge Management",
-    productName: "Mem AI",
-    contentType: "Review",
-    primaryKeyword: "mem ai review knowledge management",
+    title: "How to Build a Keyword Gap Analysis Workflow",
+    contentType: "How-To Guide",
+    primaryKeyword: "keyword gap analysis workflow",
     wordCount: 1400,
     faqCount: 5,
     neuronScore: 48,
@@ -155,7 +140,7 @@ const MOCK_ITEMS: StagedItem[] = [
       "FAQ section missing schema markup",
     ],
     snippet:
-      "Mem AI takes a radically different approach to note-taking by using AI to automatically organise and surface your notes. But does the AI-first approach actually save time, or does it create new friction?",
+      "A keyword gap analysis helps you find terms your competitors rank for that you do not. This guide walks through building an automated workflow using GSC data, Ahrefs exports, and a scoring matrix...",
     status: "rejected",
     rejectedAt: "2026-03-14T11:00:00Z",
     rejectionReason:
@@ -163,21 +148,20 @@ const MOCK_ITEMS: StagedItem[] = [
   },
   {
     id: "stg-8",
-    title: "Copy.ai vs ChatGPT for Marketing Copy",
-    productName: "Copy.ai",
-    contentType: "Comparison",
-    primaryKeyword: "copy ai vs chatgpt marketing",
+    title: "Content Scoring Explained: NeuronWriter Methodology",
+    contentType: "Explainer",
+    primaryKeyword: "neuronwriter content scoring",
     wordCount: 1200,
     faqCount: 5,
     neuronScore: 55,
     seoChecks: { passed: 11, total: 16 },
     validationWarnings: ["Word count at minimum threshold"],
     snippet:
-      "When it comes to generating marketing copy, both Copy.ai and ChatGPT have their strengths. But which one delivers better results for affiliate marketers who need consistent, high-converting content?",
+      "NeuronWriter scores content on a 0-100 scale using semantic analysis, keyword coverage, and structural checks. Understanding how the scoring works helps you write articles that consistently hit 70+ without over-optimising...",
     status: "rejected",
     rejectedAt: "2026-03-13T16:45:00Z",
     rejectionReason:
-      "Comparison lacks depth. Needs real-world examples and pricing comparison table. Also missing affiliate disclosure.",
+      "Too thin. Needs real-world scoring examples and a comparison table of score ranges vs. ranking performance.",
   },
 ];
 
@@ -192,9 +176,10 @@ function formatDate(dateString: string): string {
 }
 
 const CONTENT_TYPE_COLORS: Record<ContentType, string> = {
-  Review: "bg-blue-100 text-blue-800",
+  "SEO Article": "bg-blue-100 text-blue-800",
   Comparison: "bg-purple-100 text-purple-800",
   Explainer: "bg-amber-100 text-amber-800",
+  "How-To Guide": "bg-emerald-100 text-emerald-800",
 };
 
 function neuronScoreColor(score: number): string {
@@ -239,8 +224,6 @@ function StagingCard({ item, onApprove, onReject, onSendBack }: StagingCardProps
           </Badge>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span className="font-medium text-gray-700">{item.productName}</span>
-          <span aria-hidden="true">&middot;</span>
           <span className="italic">{item.primaryKeyword}</span>
         </div>
       </CardHeader>
@@ -454,7 +437,7 @@ export default function StagingPage() {
     <div className="space-y-6">
       <PageHeader
         title="Content Staging"
-        description="Review and approve content before publishing"
+        description="Review and approve SEO/GEO content before publishing to WordPress"
       />
 
       {/* Filter tabs */}

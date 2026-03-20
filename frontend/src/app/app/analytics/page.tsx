@@ -1,16 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { PageHeader } from "@/components/dashboard/PageHeader";
 import { ChartCard } from "@/components/dashboard/ChartCard";
-import { useAsyncData } from "@/lib/hooks/useAsyncData";
-import {
-  getRevenueByPlatform,
-  getRevenueByFormat,
-  getGapWindows,
-  getRoiData,
-  getScoringWeightHistory,
-} from "@/lib/mock-data/analytics";
 import {
   BarChart,
   Bar,
@@ -19,8 +11,6 @@ import {
   Cell,
   AreaChart,
   Area,
-  ScatterChart,
-  Scatter,
   LineChart,
   Line,
   XAxis,
@@ -42,40 +32,63 @@ const CHART_COLORS = [
 const TIME_RANGES = [7, 30, 90] as const;
 type TimeRange = (typeof TIME_RANGES)[number];
 
+// ── Inline mock data ────────────────────────────────────────────────
+
+const SCORE_DISTRIBUTION = [
+  { range: "40-49", count: 3 },
+  { range: "50-59", count: 5 },
+  { range: "60-69", count: 9 },
+  { range: "70-79", count: 16 },
+  { range: "80-89", count: 11 },
+  { range: "90+", count: 3 },
+];
+
+const ARTICLES_OVER_TIME = [
+  { week: "Feb 3", published: 2 },
+  { week: "Feb 10", published: 3 },
+  { week: "Feb 17", published: 4 },
+  { week: "Feb 24", published: 3 },
+  { week: "Mar 3", published: 5 },
+  { week: "Mar 10", published: 6 },
+  { week: "Mar 17", published: 8 },
+];
+
+const KEYWORD_RANKINGS = [
+  { name: "Top 3", value: 12 },
+  { name: "4-10", value: 28 },
+  { name: "11-20", value: 35 },
+  { name: "21-50", value: 42 },
+  { name: "50+", value: 25 },
+];
+
+const LLM_CITATIONS = [
+  { engine: "ChatGPT", citations: 8 },
+  { engine: "Perplexity", citations: 14 },
+  { engine: "Gemini", citations: 5 },
+  { engine: "AI Overviews", citations: 11 },
+];
+
+const GSC_TREND = [
+  { date: "Feb 19", clicks: 120, impressions: 4200, avgPosition: 18.4 },
+  { date: "Feb 23", clicks: 145, impressions: 4800, avgPosition: 17.1 },
+  { date: "Feb 27", clicks: 168, impressions: 5300, avgPosition: 15.8 },
+  { date: "Mar 03", clicks: 192, impressions: 5900, avgPosition: 14.2 },
+  { date: "Mar 07", clicks: 215, impressions: 6400, avgPosition: 13.5 },
+  { date: "Mar 11", clicks: 248, impressions: 7100, avgPosition: 12.1 },
+  { date: "Mar 15", clicks: 276, impressions: 7800, avgPosition: 11.3 },
+  { date: "Mar 19", clicks: 312, impressions: 8500, avgPosition: 10.6 },
+];
+
+// ── Page ────────────────────────────────────────────────────────────
+
 export default function AnalyticsPage() {
   const [days, setDays] = useState<TimeRange>(30);
-
-  const { data: revenuePlatform, loading: rpLoading } = useAsyncData(
-    useCallback(() => getRevenueByPlatform(days), [days])
-  );
-  const { data: revenueFormat, loading: rfLoading } = useAsyncData(
-    useCallback(() => getRevenueByFormat(), [])
-  );
-  const { data: gapWindows, loading: gwLoading } = useAsyncData(
-    useCallback(() => getGapWindows(days), [days])
-  );
-  const { data: roiData, loading: roiLoading } = useAsyncData(
-    useCallback(() => getRoiData(), [])
-  );
-  const { data: scoringHistory, loading: shLoading } = useAsyncData(
-    useCallback(() => getScoringWeightHistory(), [])
-  );
-
-  const loading = rpLoading || rfLoading || gwLoading || roiLoading || shLoading;
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6 p-6">
       <PageHeader
         title="Analytics"
-        description="Performance metrics and trends"
+        description="Content performance and SEO/GEO metrics"
       />
 
       {/* Time range selector */}
@@ -97,214 +110,127 @@ export default function AnalyticsPage() {
 
       {/* 2x2 chart grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Revenue by Platform */}
-        <ChartCard title="Revenue by Platform">
+        {/* Content Score Distribution */}
+        <ChartCard title="Content Score Distribution">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={revenuePlatform ?? []}>
+            <BarChart data={SCORE_DISTRIBUTION}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="date"
-                tick={{ fontSize: 12 }}
-                tickFormatter={(v) =>
-                  new Date(v).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })
-                }
+              <XAxis dataKey="range" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} />
+              <Tooltip
+                formatter={(value: number) => [value, "Articles"]}
               />
-              <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `$${v}`} />
-              <Tooltip formatter={(value: number) => [`$${value}`, undefined]} />
-              <Bar dataKey="blog" stackId="a" fill={CHART_COLORS[0]} />
-              <Bar dataKey="youtube" stackId="a" fill={CHART_COLORS[1]} />
-              <Bar dataKey="pinterest" stackId="a" fill={CHART_COLORS[2]} />
-              <Bar dataKey="social" stackId="a" fill={CHART_COLORS[3]} />
-              <Bar dataKey="email" stackId="a" fill={CHART_COLORS[4]} />
+              <Bar dataKey="count" fill={CHART_COLORS[0]} radius={[4, 4, 0, 0]} name="Articles" />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Revenue by Content Format */}
-        <ChartCard title="Revenue by Content Format">
+        {/* Articles Published Over Time */}
+        <ChartCard title="Articles Published Over Time">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={ARTICLES_OVER_TIME}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="week" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} />
+              <Tooltip formatter={(value: number) => [value, "Articles"]} />
+              <Area
+                type="monotone"
+                dataKey="published"
+                stroke={CHART_COLORS[1]}
+                fill={CHART_COLORS[1]}
+                fillOpacity={0.3}
+                name="Published"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartCard>
+
+        {/* Keyword Rankings Distribution */}
+        <ChartCard title="Keyword Rankings Distribution">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                data={revenueFormat ?? []}
-                dataKey="revenue"
-                nameKey="format"
+                data={KEYWORD_RANKINGS}
+                dataKey="value"
+                nameKey="name"
                 cx="50%"
                 cy="45%"
                 outerRadius={90}
-                label={({ format, percentage }) =>
-                  `${format} (${percentage}%)`
-                }
+                label={({ name, value }) => `${name} (${value})`}
               >
-                {(revenueFormat ?? []).map((_, index) => (
+                {KEYWORD_RANKINGS.map((_, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={CHART_COLORS[index % CHART_COLORS.length]}
                   />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number) => [`$${value}`, "Revenue"]} />
+              <Tooltip formatter={(value: number) => [value, "Keywords"]} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Gap Window Distribution */}
-        <ChartCard title="Gap Window Distribution">
+        {/* LLM Citations by Engine */}
+        <ChartCard title="LLM Citations by Engine">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={gapWindows ?? []}>
+            <BarChart data={LLM_CITATIONS}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="date"
-                tick={{ fontSize: 12 }}
-                tickFormatter={(v) =>
-                  new Date(v).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })
-                }
-              />
+              <XAxis dataKey="engine" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="gapWindows"
-                stroke={CHART_COLORS[0]}
-                fill={CHART_COLORS[0]}
-                fillOpacity={0.3}
-                name="Gap Windows"
-              />
-              <Area
-                type="monotone"
-                dataKey="captured"
-                stroke={CHART_COLORS[1]}
-                fill={CHART_COLORS[1]}
-                fillOpacity={0.3}
-                name="Captured"
-              />
-              <Legend />
-            </AreaChart>
-          </ResponsiveContainer>
-        </ChartCard>
-
-        {/* ROI by Product */}
-        <ChartCard title="ROI by Product">
-          <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="cost"
-                name="Cost"
-                tick={{ fontSize: 12 }}
-                tickFormatter={(v) => `$${v}`}
-                label={{
-                  value: "Cost ($)",
-                  position: "insideBottom",
-                  offset: -5,
-                  fontSize: 12,
-                }}
-              />
-              <YAxis
-                dataKey="revenue"
-                name="Revenue"
-                tick={{ fontSize: 12 }}
-                tickFormatter={(v) => `$${v}`}
-                label={{
-                  value: "Revenue ($)",
-                  angle: -90,
-                  position: "insideLeft",
-                  fontSize: 12,
-                }}
-              />
-              <Tooltip
-                formatter={(value: number, name: string) => [
-                  `$${value}`,
-                  name,
-                ]}
-                labelFormatter={() => ""}
-                content={({ payload }) => {
-                  if (!payload || payload.length === 0) return null;
-                  const data = payload[0]?.payload;
-                  if (!data) return null;
-                  return (
-                    <div className="rounded-lg border bg-white p-2 shadow-sm text-sm">
-                      <p className="font-medium">{data.product}</p>
-                      <p>Cost: ${data.cost}</p>
-                      <p>Revenue: ${data.revenue}</p>
-                      <p>ROI: {data.roi}%</p>
-                    </div>
-                  );
-                }}
-              />
-              <Scatter
-                data={roiData ?? []}
-                fill={CHART_COLORS[0]}
-                name="Products"
-              />
-            </ScatterChart>
+              <Tooltip formatter={(value: number) => [value, "Citations"]} />
+              <Bar dataKey="citations" fill={CHART_COLORS[2]} radius={[4, 4, 0, 0]} name="Citations" />
+            </BarChart>
           </ResponsiveContainer>
         </ChartCard>
       </div>
 
-      {/* Scoring Weight History - full width */}
-      <ChartCard title="Scoring Weight History">
+      {/* GSC Performance Trend — full width */}
+      <ChartCard title="GSC Performance Trend" description="Clicks, Impressions, and Average Position over time">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={scoringHistory ?? []}>
+          <LineChart data={GSC_TREND}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="date"
+            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <YAxis
+              yAxisId="left"
               tick={{ fontSize: 12 }}
-              tickFormatter={(v) =>
-                new Date(v).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })
-              }
+              label={{ value: "Clicks", angle: -90, position: "insideLeft", fontSize: 12 }}
             />
-            <YAxis tick={{ fontSize: 12 }} domain={[0.5, 1.5]} />
+            <YAxis
+              yAxisId="right"
+              orientation="right"
+              tick={{ fontSize: 12 }}
+              label={{ value: "Impressions", angle: 90, position: "insideRight", fontSize: 12 }}
+            />
             <Tooltip />
             <Legend />
             <Line
+              yAxisId="left"
               type="monotone"
-              dataKey="productNewness"
+              dataKey="clicks"
               stroke={CHART_COLORS[0]}
               strokeWidth={2}
               dot={false}
-              name="Product Newness"
+              name="Clicks"
             />
             <Line
+              yAxisId="right"
               type="monotone"
-              dataKey="llmGapStrength"
+              dataKey="impressions"
               stroke={CHART_COLORS[1]}
               strokeWidth={2}
               dot={false}
-              name="LLM Gap"
+              name="Impressions"
             />
             <Line
+              yAxisId="left"
               type="monotone"
-              dataKey="buyingIntent"
-              stroke={CHART_COLORS[2]}
-              strokeWidth={2}
-              dot={false}
-              name="Buying Intent"
-            />
-            <Line
-              type="monotone"
-              dataKey="affiliateAvailable"
+              dataKey="avgPosition"
               stroke={CHART_COLORS[3]}
               strokeWidth={2}
+              strokeDasharray="5 5"
               dot={false}
-              name="Affiliate Available"
-            />
-            <Line
-              type="monotone"
-              dataKey="googleGapStrength"
-              stroke={CHART_COLORS[4]}
-              strokeWidth={2}
-              dot={false}
-              name="Google Gap"
+              name="Avg Position"
             />
           </LineChart>
         </ResponsiveContainer>

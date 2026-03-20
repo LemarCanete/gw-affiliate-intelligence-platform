@@ -3,21 +3,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import {
-  Radar,
   ChevronDown,
   Search,
   Brain,
   Zap,
-  Target,
-  LineChart,
+  Globe,
+  Eye,
   BarChart3,
   Layers,
-  FileText,
   PenTool,
   BookOpen,
   HelpCircle,
   MessageSquare,
   Play,
+  LineChart,
+  Target,
   Menu,
   X,
 } from "lucide-react";
@@ -38,22 +38,22 @@ interface NavDropdown {
 const productDropdown: NavDropdown = {
   label: "Products",
   items: [
-    { icon: Search, label: "SERP Gap Scanner", description: "Discover products with zero review content", href: "#features" },
-    { icon: Brain, label: "AI Scoring Engine", description: "5-factor gap prioritisation matrix", href: "#features" },
-    { icon: Zap, label: "Content Engine", description: "6-format content from a single brief", href: "#features" },
-    { icon: Target, label: "GEO Citation Tracker", description: "Monitor AI engine citations", href: "#features" },
-    { icon: LineChart, label: "Revenue Attribution", description: "UTM-based 3-layer tracking", href: "#features" },
-    { icon: BarChart3, label: "Optimisation Engine", description: "Auto-adjust weights and A/B test", href: "#features" },
+    { icon: Search, label: "Keyword Research", description: "Discover opportunities with volume, KD, and intent data", href: "#features" },
+    { icon: Brain, label: "Domain Analysis", description: "Find ranking gaps and quick wins from your existing site", href: "#features" },
+    { icon: PenTool, label: "Content Writer", description: "AI-powered article editor with real-time SEO scoring", href: "#features" },
+    { icon: Zap, label: "NeuronWriter Integration", description: "Semantic optimization and content scoring", href: "#features" },
+    { icon: Globe, label: "WordPress Publishing", description: "One-click publish with schema and SEO metadata", href: "#features" },
+    { icon: Eye, label: "Citation Monitoring", description: "Track LLM citations and Google rankings", href: "#features" },
   ],
 };
 
 const solutionsDropdown: NavDropdown = {
   label: "Solutions",
   items: [
-    { icon: Radar, label: "First-Mover Advantage", description: "Capture gap windows before competitors", href: "#features" },
-    { icon: Layers, label: "Multi-Platform Publishing", description: "Blog, YouTube, Pinterest, social, email", href: "#features" },
-    { icon: PenTool, label: "Content at Scale", description: "Generate review, comparison, and how-to content", href: "#features" },
-    { icon: FileText, label: "Weekly Intelligence Reports", description: "Automated performance and pipeline reports", href: "#features" },
+    { icon: Layers, label: "SEO Content at Scale", description: "Generate and publish optimized articles faster", href: "#features" },
+    { icon: Target, label: "GEO Optimization", description: "Get your content cited by AI search engines", href: "#features" },
+    { icon: LineChart, label: "Rank Tracking", description: "Monitor positions, clicks, impressions across Google", href: "#features" },
+    { icon: BarChart3, label: "Content Intelligence", description: "Data-driven decisions on what to write next", href: "#features" },
   ],
 };
 
@@ -62,7 +62,7 @@ const resourcesDropdown: NavDropdown = {
   items: [
     { icon: BookOpen, label: "Documentation", description: "Platform guides and API reference", href: "#" },
     { icon: Play, label: "Getting Started", description: "Quick start guide for new users", href: "#" },
-    { icon: MessageSquare, label: "Community", description: "Join the affiliate intelligence community", href: "#" },
+    { icon: MessageSquare, label: "Community", description: "Join the SEO/GEO intelligence community", href: "#" },
     { icon: HelpCircle, label: "Support", description: "Get help from our team", href: "#" },
   ],
 };

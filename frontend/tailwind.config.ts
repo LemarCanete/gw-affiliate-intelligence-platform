@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['var(--font-ubuntu)', 'Ubuntu', 'system-ui', 'sans-serif'],
+  		},
   		colors: {
   			primary: {
   				'50': 'var(--color-primary-50)',

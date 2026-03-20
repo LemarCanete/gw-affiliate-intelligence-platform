@@ -1,14 +1,18 @@
 import re
 
 import httpx
-from anthropic import Anthropic
 
 from app.core.config import settings
 from app.core.supabase import supabase
 
-anthropic_client = (
-    Anthropic(api_key=settings.anthropic_api_key) if settings.anthropic_api_key else None
-)
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+
+# Model fallback chain
+MODELS = [
+    "anthropic/claude-sonnet-4-20250514",
+    "openai/gpt-4o",
+    "google/gemini-2.0-flash-001",
+]
 
 CLASSIFICATION_PROMPT = """Analyze this LLM response about the product "{product_name}".
 The query was: "{query}"
@@ -27,64 +31,67 @@ Rules:
 Respond with ONLY the classification word, nothing else."""
 
 
-async def query_perplexity(query: str) -> str:
-    """Query Perplexity API and return raw response."""
-    if not settings.perplexity_api_key:
-        return "Perplexity API key not configured"
+async def call_openrouter(messages: list[dict], model: str = None) -> str:
+    """Call OpenRouter with fallback models."""
+    if not settings.openrouter_api_key:
+        return "OpenRouter API key not configured"
 
-    async with httpx.AsyncClient() as client:
-        response = await client.post(
-            "https://api.perplexity.ai/chat/completions",
-            headers={
-                "Authorization": f"Bearer {settings.perplexity_api_key}",
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": "sonar",
-                "messages": [{"role": "user", "content": query}],
-                "temperature": 0.2,
-                "max_tokens": 1000,
-            },
-            timeout=30.0,
-        )
-        data = response.json()
-        return (
-            data.get("choices", [{}])[0]
-            .get("message", {})
-            .get("content", "No response")
-        )
+    models_to_try = [model] if model else MODELS
+
+    for m in models_to_try:
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    OPENROUTER_URL,
+                    headers={
+                        "Authorization": f"Bearer {settings.openrouter_api_key}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": m,
+                        "messages": messages,
+                        "max_tokens": 1000,
+                        "temperature": 0.2,
+                    },
+                    timeout=30.0,
+                )
+                if response.status_code == 200:
+                    data = response.json()
+                    return data["choices"][0]["message"]["content"]
+        except Exception as e:
+            print(f"OpenRouter {m} failed: {e}")
+            continue
+
+    return "All models failed"
+
+
+async def query_perplexity(query: str) -> str:
+    """Query Perplexity via OpenRouter."""
+    return await call_openrouter(
+        [{"role": "user", "content": query}],
+        model="perplexity/sonar",
+    )
 
 
 async def query_chatgpt_via_claude(query: str) -> str:
-    """Use Claude to simulate what ChatGPT would say (or use OpenAI API if available).
-    For now, we query Claude and note this is a proxy."""
-    if not anthropic_client:
-        return "Anthropic API key not configured"
-
-    message = anthropic_client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=1000,
-        messages=[{"role": "user", "content": query}],
+    """Query LLM via OpenRouter with multi-model fallback."""
+    return await call_openrouter(
+        [{"role": "user", "content": query}],
     )
-    return message.content[0].text
 
 
 async def classify_response(product_name: str, query: str, response: str) -> str:
-    """Use Claude to classify the LLM response."""
-    if not anthropic_client:
-        return "vague"
-
+    """Use OpenRouter (Claude preferred) to classify the LLM response."""
     prompt = CLASSIFICATION_PROMPT.format(
         product_name=product_name, query=query, response=response
     )
 
-    message = anthropic_client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=50,
-        messages=[{"role": "user", "content": prompt}],
+    result = await call_openrouter(
+        [{"role": "user", "content": prompt}],
+        model="anthropic/claude-sonnet-4-20250514",
     )
 
-    classification = message.content[0].text.strip().lower()
+    classification = result.strip().lower()
     valid = ["no-info", "vague", "generic", "detailed", "cites-sources"]
     return classification if classification in valid else "vague"
 

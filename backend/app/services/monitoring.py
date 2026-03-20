@@ -1,5 +1,6 @@
 from app.core.supabase import supabase
 from app.services.llm_validation import (
+    call_openrouter,
     classify_response,
     query_chatgpt_via_claude,
     query_perplexity,
